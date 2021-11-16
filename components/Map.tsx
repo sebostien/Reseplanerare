@@ -12,6 +12,7 @@ interface Props {
 	fromStop: string;
 	toStop: string;
 	paths: Line[][];
+	selectedPath: number;
 }
 
 const Map: NextPage<Props> = (props) => {
@@ -21,7 +22,7 @@ const Map: NextPage<Props> = (props) => {
 		zoom: 13.5,
 	});
 
-	const { geoJson, fromStop, toStop, paths } = props;
+	const { geoJson, fromStop, toStop, paths, selectedPath } = props;
 
 	return (
 		<MapGL
@@ -35,8 +36,14 @@ const Map: NextPage<Props> = (props) => {
 			mapboxApiAccessToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN}
 			onViewportChange={setViewport}
 		>
-			<Pins geoJson={geoJson} fromStop={fromStop} toStop={toStop} />
+			<Pins
+				path={paths[selectedPath]}
+				geoJson={geoJson}
+				fromStop={fromStop}
+				toStop={toStop}
+			/>
 			<Lines
+				selectedPath={selectedPath}
 				geoJson={geoJson}
 				fromStop={fromStop}
 				toStop={toStop}

@@ -5,10 +5,12 @@ import MapNoSSR from '../components/NoSSR';
 import DisplayPath from '../components/DisplayPath';
 import Input from '../components/Input';
 import { ApiPath } from '../pages/api/pathFind';
+import { Stop } from '../util/DataTypes';
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 const usePathSWR = (
+	stops: Stop[],
 	fromStop: string,
 	toStop: string,
 	time: string,
@@ -17,8 +19,9 @@ const usePathSWR = (
 		`/api/pathFind?from=${fromStop}&to=${toStop}&time=${time}`,
 		fetcher,
 	);
-
-	if (!fromStop || !toStop) return { paths: [] };
+	const stopNames = stops?.map(({ name }) => name) || [];
+	if (!stopNames.includes(fromStop) || !stopNames.includes(toStop))
+		return { paths: [] };
 
 	if (data === undefined) return { paths: [] };
 
@@ -29,17 +32,13 @@ const Main = () => {
 	const { data, error } = useSWR('/api/geoJson', fetcher);
 	let [fromStop, setFromStop] = useState('Svingeln');
 	let [toStop, setToStop] = useState('Sankt Sigfrids plan');
+	let [selectedPath, setSelectedPath] = useState(0);
 
 	// TODO: Update time with input and use in request
 	let [startTime, setStartTime] = useState('16:30');
-	const { paths } = usePathSWR(fromStop, toStop, startTime);
+	const { paths } = usePathSWR(data?.stops, fromStop, toStop, startTime);
 
 	if (!data) return <Loading />;
-
-	const handleChange = (t: React.ChangeEvent<HTMLSelectElement>) => {
-		if (t.target.name === 'from') setFromStop(t.target.value);
-		if (t.target.name === 'to') setToStop(t.target.value);
-	};
 
 	return (
 		<div className="flex min-h-screen">
@@ -48,14 +47,20 @@ const Main = () => {
 					stops={data.stops}
 					value={fromStop}
 					name="from"
-					onChange={handleChange}
+					onChange={(t) => {
+						setSelectedPath(0);
+						setFromStop(t.target.value);
+					}}
 					placeholder="Från..."
 				/>
 				<Input
 					stops={data.stops}
 					value={toStop}
 					name="to"
-					onChange={handleChange}
+					onChange={(t) => {
+						setSelectedPath(0);
+						setToStop(t.target.value);
+					}}
 					placeholder="Till..."
 				/>
 				<input
@@ -63,17 +68,23 @@ const Main = () => {
 					value={startTime}
 					type="text"
 					name="time"
-					onChange={(t) => setStartTime(t.target.value)}
+					onChange={(t) => {
+						setSelectedPath(0);
+						setStartTime(t.target.value);
+					}}
 				/>
 				<DisplayPath
 					paths={paths}
 					geoJson={data}
 					fromStop={fromStop}
 					toStop={toStop}
+					selectedPath={selectedPath}
+					setSelectedPath={setSelectedPath}
 				/>
 			</div>
 			<div className="flex-initial p-2 w-full h-screen">
 				<MapNoSSR
+					selectedPath={selectedPath}
 					paths={paths}
 					geoJson={data}
 					fromStop={fromStop}

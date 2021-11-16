@@ -10,10 +10,11 @@ interface Props {
 	fromStop: string;
 	toStop: string;
 	paths: Line[][];
+	selectedPath: number;
 }
 
 const Lines: NextPage<Props> = (props) => {
-	const { geoJson, paths, fromStop, toStop } = props;
+	const { geoJson, paths, fromStop, toStop, selectedPath } = props;
 
 	// TODO: add selected path
 
@@ -23,7 +24,8 @@ const Lines: NextPage<Props> = (props) => {
 
 	const allLayers: ReactElement[] = [];
 
-	for (let i = 0; i < paths.length; i++) {
+	// for (let i = 0; i < paths.length; i++) {
+	for (let i = selectedPath; i <= selectedPath; i++) {
 		const lineName = new Set(paths[i].map((v) => v.lineName));
 
 		for (let name of lineName) {
