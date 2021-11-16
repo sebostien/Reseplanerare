@@ -14,6 +14,7 @@ export type DataJSON = {
 	stops: Stop[];
 	events: {
 		stop: string;
+		time: string;
 	}[];
 	styles: {
 		type: TransportTypes;
@@ -45,6 +46,7 @@ export type Line = {
 	lineName: string;
 	type: string;
 	from: string;
+	events: string[];
 	to: string;
 	styles: {
 		type: TransportTypes;
