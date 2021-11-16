@@ -375,6 +375,14 @@
 			"to": "Ullevi Norra",
 			"departure": "17:36",
 			"arriving": "17:38"
+		},
+		{
+			"lineNumber": "6",
+			"name": "Mot Länsmansgården via",
+			"from": "Ullevi Norra",
+			"to": "Svingeln",
+			"departure": "17:39",
+			"arriving": "17:41"
 		}
 	]
 }

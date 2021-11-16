@@ -49,19 +49,15 @@ const DFS = (
 	const outgoing = findPathsFrom('first', startTime, current);
 
 	let paths: Path[] = [];
-
+	let newVisited = new Set<string>();
 	for (let path of outgoing) {
 		if (visited.has(path.to)) continue;
 
-		visited.add(path.to);
+		newVisited.add(path.to);
+		let newSet = copySet(visited);
+		newSet.add(path);
 
-		let childPaths = DFS(
-			stops,
-			copySet(visited),
-			path.to,
-			goal,
-			path.arriving,
-		);
+		let childPaths = DFS(stops, newSet, path.to, goal, path.arriving);
 
 		for (let childPath of childPaths) {
 			const hasEvent =
@@ -73,6 +69,8 @@ const DFS = (
 			});
 		}
 	}
+
+	for (let v of newVisited) visited.add(v);
 
 	return paths;
 };
