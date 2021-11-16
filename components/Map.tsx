@@ -2,6 +2,7 @@ import { NextPage } from 'next';
 import React, { useState } from 'react';
 import MapGL from 'react-map-gl';
 import { ReturnGeoData } from '../pages/api/geoJson';
+import { Path } from '../pages/api/pathFind';
 import { Line } from '../util/DataTypes';
 import Lines from './Lines';
 import Pins from './Pins';
@@ -11,7 +12,7 @@ interface Props {
 	geoJson: ReturnGeoData;
 	fromStop: string;
 	toStop: string;
-	paths: Line[][];
+	paths: Path[];
 	selectedPath: number;
 }
 

@@ -6,11 +6,13 @@ import DisplayPath from '../components/DisplayPath';
 import Input from '../components/Input';
 import { ApiPath } from '../pages/api/pathFind';
 import { Stop } from '../util/DataTypes';
+import { ReturnGeoData } from '../pages/api/geoJson';
+import { parseTime } from '../util/Time';
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 const usePathSWR = (
-	stops: Stop[],
+	stops: Record<string, Stop>,
 	fromStop: string,
 	toStop: string,
 	time: string,
@@ -19,7 +21,7 @@ const usePathSWR = (
 		`/api/pathFind?from=${fromStop}&to=${toStop}&time=${time}`,
 		fetcher,
 	);
-	const stopNames = stops?.map(({ name }) => name) || [];
+	const stopNames = Object.keys(stops);
 	if (!stopNames.includes(fromStop) || !stopNames.includes(toStop))
 		return { paths: [] };
 
@@ -29,20 +31,25 @@ const usePathSWR = (
 };
 
 const Main = () => {
-	const { data, error } = useSWR('/api/geoJson', fetcher);
+	const { data, error } = useSWR<ReturnGeoData>('/api/geoJson', fetcher);
 	let [fromStop, setFromStop] = useState('Svingeln');
 	let [toStop, setToStop] = useState('Sankt Sigfrids plan');
 	let [selectedPath, setSelectedPath] = useState(0);
 
 	// TODO: Update time with input and use in request
 	let [startTime, setStartTime] = useState('16:30');
-	const { paths } = usePathSWR(data?.stops, fromStop, toStop, startTime);
+	const { paths } = usePathSWR(
+		data?.stops || {},
+		fromStop,
+		toStop,
+		startTime,
+	);
 
 	if (!data) return <Loading />;
 
 	return (
 		<div className="flex min-h-screen">
-			<div className="flex-initial p-1 h-screen overflow-scroll">
+			<div className="flex-initial p-1 h-screen overflow-y-scroll overflow-x-hidden">
 				<Input
 					stops={data.stops}
 					value={fromStop}
@@ -72,6 +79,7 @@ const Main = () => {
 						setSelectedPath(0);
 						setStartTime(t.target.value);
 					}}
+					placeholder="Tid..."
 				/>
 				<DisplayPath
 					paths={paths}

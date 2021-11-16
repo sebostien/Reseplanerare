@@ -11,16 +11,9 @@ for (const stop of DATA.stops) {
 		throw new Error(
 			`'data.json' longitude in stop "${stop.name}" not valid!`,
 		);
-}
 
-for (const event of DATA.events) {
-	if (DATA.stops.filter(({ name }) => name == event.stop).length === 0)
-		throw new Error(`'data.json' no stop named '${event.stop}'' in event`);
-
-	if (typeof parseTime(event.time) === 'string')
-		throw new Error(
-			`'data.json' wrong time format '${event.time}' at event '${event.stop}'`,
-		);
+	if (stop.event !== undefined && typeof parseTime(stop.event) === 'string')
+		throw new Error(`'data.json' wrong time on stop ${stop.name}`);
 }
 
 for (const styles of DATA.styles) {

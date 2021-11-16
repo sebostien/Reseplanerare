@@ -33,7 +33,8 @@
 		{
 			"name": "Scandinavium",
 			"lat": 57.70043,
-			"lng": 11.985886
+			"lng": 11.985886,
+			"event": "17:10"
 		},
 		{
 			"name": "Liseberg Station",
@@ -126,12 +127,6 @@
 			"lineNumber": "6",
 			"color": "rgb(0, 67, 92)",
 			"backgroundColor": "rgb(248, 152, 40)"
-		}
-	],
-	"events": [
-		{
-			"stop": "Ullevi Norra",
-			"time": "17:20"
 		}
 	],
 	"coords": [

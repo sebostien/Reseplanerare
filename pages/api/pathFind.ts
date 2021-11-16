@@ -1,10 +1,15 @@
 import { Line, Stop } from '../../util/DataTypes';
-import { LINES } from '../../util/dataToGeoJson';
+import { LINES, STOPS } from '../../util/dataToGeoJson';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { parseTime, timeToMinutes } from '../../util/Time';
 
+export type Path = {
+	lines: Line[];
+	hasEvent: boolean;
+};
+
 export type ApiPath = {
-	paths: Line[][];
+	paths: Path[];
 };
 
 const findPathsFrom = (
@@ -14,6 +19,7 @@ const findPathsFrom = (
 ): Line[] => {
 	let outgoing = LINES.filter((v) => v.from === from);
 	const startTime = parseTime(currentTime);
+
 	outgoing = outgoing.filter((v) => {
 		const departure = parseTime(v.departure);
 
@@ -31,29 +37,40 @@ const copySet = (set: Set<any>): Set<any> => {
 	return new Set(set.entries());
 };
 
-// TODO: Add time, if change of line time changes
 const DFS = (
+	stops: Map<string, Stop>,
 	visited: Set<string>,
 	current: string,
 	goal: string,
 	startTime: string,
-): Line[][] => {
-	if (goal == current) return [[]];
+): Path[] => {
+	if (goal == current) return [{ lines: [], hasEvent: false }];
 
 	const outgoing = findPathsFrom('first', startTime, current);
 
-	let paths: Line[][] = [];
+	let paths: Path[] = [];
 
 	for (let path of outgoing) {
 		if (visited.has(path.to)) continue;
 
 		visited.add(path.to);
 
-		let childPaths = DFS(copySet(visited), path.to, goal, path.arriving);
+		let childPaths = DFS(
+			stops,
+			copySet(visited),
+			path.to,
+			goal,
+			path.arriving,
+		);
 
 		for (let childPath of childPaths) {
-			childPath.unshift(path);
-			paths.push(childPath);
+			const hasEvent =
+				childPath.hasEvent ||
+				(stops.get(path.from)?.event ? true : false);
+			paths.push({
+				lines: [path, ...childPath.lines],
+				hasEvent,
+			});
 		}
 	}
 
@@ -74,6 +91,7 @@ const pathFind = (req: NextApiRequest, res: NextApiResponse<ApiPath>) => {
 	const visited = new Set<string>([fromName.trim()]);
 
 	const paths = DFS(
+		STOPS,
 		visited,
 		fromName.trim(),
 		toName.trim(),

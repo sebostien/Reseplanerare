@@ -26,17 +26,12 @@ for (const line of DATA.lines) {
 			)
 			.map((v) => v.coords)[0] || [];
 
-	const events = DATA.events
-		.filter(({ stop }) => stop === line.to)
-		.map(({ time }) => time);
-
 	const newLine: Line = {
 		lineNumber: line.lineNumber,
 		lineName: line.name,
 		type: transportType,
 		from: line.from,
 		to: line.to,
-		events,
 		styles: styles[0],
 		departure: line.departure,
 		arriving: line.arriving,

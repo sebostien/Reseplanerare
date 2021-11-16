@@ -4,12 +4,13 @@ import { Source, Layer, LayerProps } from 'react-map-gl';
 import { ReturnGeoData } from '../pages/api/geoJson';
 import { Line, Stop } from '../util/DataTypes';
 import _ from 'lodash';
+import { Path } from '../pages/api/pathFind';
 
 interface Props {
 	geoJson: ReturnGeoData;
 	fromStop: string;
 	toStop: string;
-	paths: Line[][];
+	paths: Path[];
 	selectedPath: number;
 }
 
@@ -20,13 +21,15 @@ const Lines: NextPage<Props> = (props) => {
 
 	const allLines = new Map<string, GeoJSON.Feature[]>();
 
-	if (paths.length === 0 || paths[0].length === 0) return <></>;
+	if (paths.length === 0 || paths[0].lines.length === 0) return <></>;
 
 	const allLayers: ReactElement[] = [];
 
 	// for (let i = 0; i < paths.length; i++) {
 	for (let i = selectedPath; i <= selectedPath; i++) {
-		const lineName = new Set(paths[i].map((v) => v.lineName));
+		const lineName = new Set(
+			paths[i].lines.map(({ lineName }) => lineName),
+		);
 
 		for (let name of lineName) {
 			const lineLayer: LayerProps = {
@@ -39,8 +42,9 @@ const Lines: NextPage<Props> = (props) => {
 				},
 				filter: ['==', name, ['get', 'name']],
 				paint: {
-					'line-color': paths[i].filter((v) => v.lineName == name)[0]
-						.styles.backgroundColor,
+					'line-color': paths[i].lines.filter(
+						(v) => v.lineName == name,
+					)[0].styles.backgroundColor,
 					'line-width': 5,
 				},
 			};
@@ -48,23 +52,21 @@ const Lines: NextPage<Props> = (props) => {
 			allLayers.push(<Layer {...lineLayer} key={name} />);
 		}
 
-		for (let line of paths[i]) {
+		for (let line of paths[i].lines) {
 			let lii = allLines.get(line.lineName);
 			if (!lii) {
 				lii = [];
 			}
 
 			let coords = [];
-			let fromCoords = geoJson.stops.filter(
-				({ name }: Stop) => name === line.from,
-			)[0];
+			let fromCoords = geoJson.stops[line.from];
+
 			coords.push([fromCoords.lng, fromCoords.lat]);
 			coords = coords.concat(
 				line.coords.map(({ lng, lat }) => [lng, lat]),
 			);
-			let toCoords = geoJson.stops.filter(
-				({ name }: Stop) => name === line.to,
-			)[0];
+			let toCoords = geoJson.stops[line.to];
+
 			coords.push([toCoords.lng, toCoords.lat]);
 
 			lii.push({

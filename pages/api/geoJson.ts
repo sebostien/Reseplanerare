@@ -3,12 +3,12 @@ import { STOPS } from '../../util/dataToGeoJson';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 export type ReturnGeoData = {
-	stops: Stop[];
+	stops: Record<string, Stop>;
 };
 
 const geoJson = (req: NextApiRequest, res: NextApiResponse<ReturnGeoData>) => {
 	// TODO: select lines and stops
-	const stops = [...STOPS.values()];
+	const stops = Object.fromEntries(STOPS.entries());
 
 	res.status(200).json({ stops });
 };
