@@ -17,12 +17,12 @@ const getIcon = (
 		// https://www.vasttrafik.se/Static/dist/map-marker-empty-blue-ac56c1522c4912d2a7dc68b95e05d84f.svg
 		return (
 			<svg
-				height={24}
+				height={32}
 				version="1.1"
 				xmlns="http://www.w3.org/2000/svg"
 				viewBox={`0 0 42 55`}
 				style={{
-					transform: `translate(-10px,-24px)`,
+					transform: `translate(-12px,-32px)`,
 				}}
 			>
 				<g fill="#009ddb">
