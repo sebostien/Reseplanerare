@@ -42,7 +42,7 @@ const Main = () => {
 
 	return (
 		<div className="flex min-h-screen">
-			<div className="flex-initial p-1">
+			<div className="flex-initial p-1 h-screen overflow-scroll">
 				<Input
 					stops={data.stops}
 					value={fromStop}
