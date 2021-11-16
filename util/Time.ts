@@ -21,3 +21,11 @@ export const timeBetween = (t1: string, t2: string): number => {
 export const timeToMinutes = (time: number): number => {
 	return Math.floor(time / 60);
 };
+
+export const timeWithinMinutes = (
+	t1: string,
+	t2: string,
+	minutes: number,
+): boolean => {
+	return Math.abs(timeBetween(t1, t2)) <= minutes;
+};

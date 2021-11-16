@@ -17,7 +17,7 @@ const usePathSWR = (
 	toStop: string,
 	time: string,
 ): ApiPath => {
-	const { data, error } = useSWR(
+	const { data, error } = useSWR<ApiPath>(
 		`/api/pathFind?from=${fromStop}&to=${toStop}&time=${time}`,
 		fetcher,
 	);
@@ -31,13 +31,19 @@ const usePathSWR = (
 };
 
 const Main = () => {
-	const { data, error } = useSWR<ReturnGeoData>('/api/geoJson', fetcher);
 	let [fromStop, setFromStop] = useState('Svingeln');
 	let [toStop, setToStop] = useState('Sankt Sigfrids plan');
 	let [selectedPath, setSelectedPath] = useState(0);
-
-	// TODO: Update time with input and use in request
 	let [startTime, setStartTime] = useState('16:30');
+
+	const { data, error } = useSWR<ReturnGeoData>(
+		'/api/geoJson?time=' + startTime,
+		fetcher,
+		{
+			revalidateOnFocus: false,
+			fallbackData: { stops: {} },
+		},
+	);
 	const { paths } = usePathSWR(
 		data?.stops || {},
 		fromStop,

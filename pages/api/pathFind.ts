@@ -98,6 +98,7 @@ const pathFind = (req: NextApiRequest, res: NextApiResponse<ApiPath>) => {
 		startTime.trim(),
 	);
 
+	// TODO: avoid events
 	// TODO: sort paths based on arriving time and return max 3 paths
 
 	res.status(200).json({ paths });
