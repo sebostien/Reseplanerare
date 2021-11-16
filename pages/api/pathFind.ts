@@ -46,9 +46,10 @@ const DFS = (
 
 	for (let path of outgoing) {
 		if (visited.has(path.to)) continue;
+
 		visited.add(path.to);
 
-		let childPaths = DFS(copySet(visited), path.to, goal, startTime);
+		let childPaths = DFS(copySet(visited), path.to, goal, path.arriving);
 
 		for (let childPath of childPaths) {
 			childPath.unshift(path);
