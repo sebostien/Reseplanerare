@@ -12,6 +12,9 @@ export enum TransportTypes {
 
 export type DataJSON = {
 	stops: Stop[];
+	events: {
+		stop: string;
+	}[];
 	styles: {
 		type: TransportTypes;
 		lineNumber: string;

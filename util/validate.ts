@@ -13,6 +13,16 @@ for (const stop of DATA.stops) {
 		);
 }
 
+for (const event of DATA.events) {
+	if (DATA.stops.filter(({ name }) => name == event.stop).length === 0)
+		throw new Error(`'data.json' no stop named '${event.stop}'' in event`);
+
+	if (typeof parseTime(event.time) === 'string')
+		throw new Error(
+			`'data.json' wrong time format '${event.time}' at event '${event.stop}'`,
+		);
+}
+
 for (const styles of DATA.styles) {
 	const tt = Object.values(TransportTypes) as string[];
 
