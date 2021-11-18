@@ -1,388 +1,258 @@
 {
-	"stops": [
-		{
-			"name": "Korsvägen",
-			"lat": 57.696982,
-			"lng": 11.98691
-		},
-		{
-			"name": "Svingeln",
-			"lat": 57.713244,
-			"lng": 11.991568
-		},
-		{
-			"name": "Redbergsplatsen",
-			"lat": 57.716195,
-			"lng": 12.004559
-		},
-		{
-			"name": "Sankt Sigfrids plan",
-			"lat": 57.698648,
-			"lng": 11.999343
-		},
-		{
-			"name": "Ullevi Norra",
-			"lat": 57.7081,
-			"lng": 11.986166
-		},
-		{
-			"name": "Ullevi Södra",
-			"lat": 57.703913,
-			"lng": 11.985012
-		},
-		{
-			"name": "Scandinavium",
-			"lat": 57.70043,
-			"lng": 11.985886,
-			"event": "17:10"
-		},
-		{
-			"name": "Liseberg Station",
-			"lat": 57.697522,
-			"lng": 11.994167
-		},
-		{
-			"name": "Olskrokstorget",
-			"lat": 57.714637,
-			"lng": 11.999052
-		},
-		{
-			"name": "Stockholmsgatan",
-			"lat": 57.717086,
-			"lng": 12.013843
-		},
-		{
-			"name": "Härlanda",
-			"lat": 57.71817,
-			"lng": 12.019761
-		},
-		{
-			"name": "Solrosgatan",
-			"lat": 57.716403,
-			"lng": 12.025096
-		},
-		{
-			"name": "Sanatoriegatan",
-			"lat": 57.713416,
-			"lng": 12.024113
-		},
-		{
-			"name": "Virginsgatan",
-			"lat": 57.711046,
-			"lng": 12.023512
-		},
-		{
-			"name": "Welandergatan",
-			"lat": 57.705949,
-			"lng": 12.024004
-		},
-		{
-			"name": "Töpelsgatan",
-			"lat": 57.702418,
-			"lng": 12.022278
-		},
-		{
-			"name": "Bögatan",
-			"lat": 57.701028,
-			"lng": 12.016223
-		},
-		{
-			"name": "Ekmanska",
-			"lat": 57.699646,
-			"lng": 12.009405
-		},
-		{
-			"name": "Bäckeliden",
-			"lat": 57.699909,
-			"lng": 12.003551
-		}
-	],
-	"styles": [
-		{
-			"type": "walk",
-			"lineNumber": "walk",
-			"color": "rgb(255, 255, 255)",
-			"backgroundColor": "rgb(170, 231, 164)"
-		},
-		{
-			"type": "tram",
-			"lineNumber": "3",
-			"color": "rgb(255, 255, 255)",
-			"backgroundColor": "rgb(0, 113, 193)"
-		},
-		{
-			"type": "tram",
-			"lineNumber": "5",
-			"color": "rgb(255, 255, 255)",
-			"backgroundColor": "rgb(198, 53, 57)"
-		},
-		{
-			"type": "tram",
-			"lineNumber": "8",
-			"color": "rgb(255, 255, 255)",
-			"backgroundColor": "rgb(165, 68, 154)"
-		},
-		{
-			"type": "tram",
-			"lineNumber": "6",
-			"color": "rgb(0, 67, 92)",
-			"backgroundColor": "rgb(248, 152, 40)"
-		}
-	],
-	"coords": [
-		{
-			"type": "tram",
-			"from": "Svingeln",
-			"to": "Ullevi Norra",
-			"coords": [
-				{
-					"lat": 57.712588,
-					"lng": 11.990822
-				},
-				{
-					"lat": 57.71217,
-					"lng": 11.990634
-				}
-			]
-		},
-		{
-			"type": "tram",
-			"from": "Ullevi Norra",
-			"to": "Ullevi Södra",
-			"coords": [
-				{
-					"lat": 57.707008,
-					"lng": 11.984882
-				}
-			]
-		},
-		{
-			"type": "tram",
-			"from": "Liseberg Station",
-			"to": "Sankt Sigfrids plan",
-			"coords": [
-				{
-					"lat": 57.697722,
-					"lng": 11.996569
-				},
-				{
-					"lat": 57.697796,
-					"lng": 11.99727
-				},
-				{
-					"lat": 57.697912,
-					"lng": 11.997847
-				},
-				{
-					"lat": 57.698143,
-					"lng": 11.998515
-				}
-			]
-		},
-		{
-			"type": "tram",
-			"from": "Härlanda",
-			"to": "Solrosgatan",
-			"coords": [
-				{
-					"lat": 57.718427,
-					"lng": 12.021116
-				},
-				{
-					"lat": 57.718488,
-					"lng": 12.021855
-				},
-				{
-					"lat": 57.71843,
-					"lng": 12.022408
-				},
-				{
-					"lat": 57.718296,
-					"lng": 12.023068
-				},
-				{
-					"lat": 57.718026,
-					"lng": 12.024013
-				},
-				{
-					"lat": 57.7177,
-					"lng": 12.024657
-				},
-				{
-					"lat": 57.717258,
-					"lng": 12.025054
-				}
-			]
-		}
-	],
-	"lines": [
-		{
-			"lineNumber": "8",
-			"name": "Mot Frölunda",
-			"from": "Svingeln",
-			"to": "Ullevi Norra",
-			"departure": "17:00",
-			"arriving": "17:02"
-		},
-		{
-			"lineNumber": "8",
-			"name": "Mot Frölunda",
-			"from": "Ullevi Norra",
-			"to": "Ullevi Södra",
-			"departure": "17:02",
-			"arriving": "17:04"
-		},
-		{
-			"lineNumber": "8",
-			"name": "Mot Frölunda",
-			"from": "Ullevi Södra",
-			"to": "Scandinavium",
-			"departure": "17:04",
-			"arriving": "17:06"
-		},
-		{
-			"lineNumber": "8",
-			"name": "Mot Frölunda",
-			"from": "Scandinavium",
-			"to": "Korsvägen",
-			"departure": "17:06",
-			"arriving": "17:07"
-		},
-		{
-			"lineNumber": "5",
-			"name": "Mot Östra Sjukhuset",
-			"from": "Korsvägen",
-			"to": "Liseberg Station",
-			"departure": "17:18",
-			"arriving": "17:20"
-		},
-		{
-			"lineNumber": "5",
-			"name": "Mot Östra Sjukhuset",
-			"from": "Liseberg Station",
-			"to": "Sankt Sigfrids plan",
-			"departure": "17:20",
-			"arriving": "17:21"
-		},
-		{
-			"lineNumber": "3",
-			"name": "Mot Kålltorp",
-			"from": "Svingeln",
-			"to": "Olskrokstorget",
-			"departure": "17:04",
-			"arriving": "17:06"
-		},
-		{
-			"lineNumber": "3",
-			"name": "Mot Kålltorp",
-			"from": "Olskrokstorget",
-			"to": "Redbergsplatsen",
-			"departure": "17:06",
-			"arriving": "17:07"
-		},
-		{
-			"lineNumber": "3",
-			"name": "Mot Kålltorp",
-			"from": "Redbergsplatsen",
-			"to": "Stockholmsgatan",
-			"departure": "17:07",
-			"arriving": "17:09"
-		},
-		{
-			"lineNumber": "3",
-			"name": "Mot Kålltorp",
-			"from": "Stockholmsgatan",
-			"to": "Härlanda",
-			"departure": "17:09",
-			"arriving": "17:10"
-		},
-		{
-			"lineNumber": "3",
-			"name": "Mot Kålltorp",
-			"from": "Härlanda",
-			"to": "Solrosgatan",
-			"departure": "17:10",
-			"arriving": "17:12"
-		},
-		{
-			"lineNumber": "3",
-			"name": "Mot Kålltorp",
-			"from": "Solrosgatan",
-			"to": "Sanatoriegatan",
-			"departure": "17:12",
-			"arriving": "17:13"
-		},
-		{
-			"lineNumber": "3",
-			"name": "Mot Kålltorp",
-			"from": "Sanatoriegatan",
-			"to": "Virginsgatan",
-			"departure": "17:13",
-			"arriving": "17:14"
-		},
-		{
-			"lineNumber": "5",
-			"name": "Mot Länsmansgården",
-			"from": "Virginsgatan",
-			"to": "Welandergatan",
-			"departure": "17:19",
-			"arriving": "17:21"
-		},
-		{
-			"lineNumber": "5",
-			"name": "Mot Länsmansgården",
-			"from": "Welandergatan",
-			"to": "Töpelsgatan",
-			"departure": "17:21",
-			"arriving": "17:22"
-		},
-		{
-			"lineNumber": "5",
-			"name": "Mot Länsmansgården",
-			"from": "Töpelsgatan",
-			"to": "Bögatan",
-			"departure": "17:22",
-			"arriving": "17:23"
-		},
-		{
-			"lineNumber": "5",
-			"name": "Mot Länsmansgården",
-			"from": "Bögatan",
-			"to": "Ekmanska",
-			"departure": "17:23",
-			"arriving": "17:24"
-		},
-		{
-			"lineNumber": "5",
-			"name": "Mot Länsmansgården",
-			"from": "Ekmanska",
-			"to": "Bäckeliden",
-			"departure": "17:24",
-			"arriving": "17:25"
-		},
-		{
-			"lineNumber": "5",
-			"name": "Mot Länsmansgården",
-			"from": "Bäckeliden",
-			"to": "Sankt Sigfrids plan",
-			"departure": "17:25",
-			"arriving": "17:26"
-		},
-		{
-			"lineNumber": "6",
-			"name": "Mot Länsmansgården via Sahlgrenska",
-			"from": "Svingeln",
-			"to": "Ullevi Norra",
-			"departure": "17:36",
-			"arriving": "17:38"
-		},
-		{
-			"lineNumber": "6",
-			"name": "Mot Länsmansgården via",
-			"from": "Ullevi Norra",
-			"to": "Svingeln",
-			"departure": "17:39",
-			"arriving": "17:41"
-		}
-	]
+    "stops": [
+        {
+            "name": "Svingeln",
+            "coords": [
+                11.991568,
+                57.713244
+            ]
+        },
+        {
+            "name": "Ullevi Norra",
+            "coords": [
+                11.986166,
+                57.7081
+            ]
+        },
+        {
+            "name": "Ullevi Södra",
+            "coords": [
+                11.985012,
+                57.703913
+            ]
+        },
+        {
+            "name": "Scandinavium",
+            "events": [
+                {
+                    "eventName": "Something",
+                    "eventTime": "17:00"
+                }
+            ],
+            "coords": [
+                11.985886,
+                57.70043
+            ]
+        },
+        {
+            "name": "Korsvägen",
+            "coords": [
+                11.98691,
+                57.696982
+            ]
+        },
+        {
+            "name": "Liseberg Station",
+            "coords": [
+                11.994167,
+                57.697522
+            ]
+        },
+        {
+            "name": "Sankt Sigfrids Plan",
+            "coords": [
+                11.999343,
+                57.698648
+            ]
+        },
+        {
+            "name": "Redbergsplatsen",
+            "coords": [
+                12.004559,
+                57.716195
+            ]
+        },
+        {
+            "name": "Olskrokstorget",
+            "coords": [
+                11.999052,
+                57.714637
+            ]
+        },
+        {
+            "name": "Stockholmsgatan",
+            "coords": [
+                12.013843,
+                57.717086
+            ]
+        },
+        {
+            "name": "Härlanda",
+            "coords": [
+                12.019761,
+                57.71817
+            ]
+        },
+        {
+            "name": "Solrosgatan",
+            "coords": [
+                12.025096,
+                57.716403
+            ]
+        },
+        {
+            "name": "Sanatoriegatan",
+            "coords": [
+                12.024113,
+                57.713416
+            ]
+        },
+        {
+            "name": "Virginsgatan",
+            "coords": [
+                12.023512,
+                57.711046
+            ]
+        },
+        {
+            "name": "Welandergatan",
+            "coords": [
+                12.024004,
+                57.705949
+            ]
+        },
+        {
+            "name": "Töpelsgatan",
+            "coords": [
+                12.022278,
+                57.702418
+            ]
+        },
+        {
+            "name": "Bögatan",
+            "coords": [
+                12.016223,
+                57.701028
+            ]
+        },
+        {
+            "name": "Ekmanska",
+            "coords": [
+                12.009405,
+                57.699646
+            ]
+        },
+        {
+            "name": "Bäckeliden",
+            "coords": [
+                12.003551,
+                57.699909
+            ]
+        }
+    ],
+    "styles": [
+        {
+            "type": "TRAM",
+            "lineNumber": "3",
+            "color": "rgb(255, 255, 255)",
+            "backgroundColor": "rgb(0, 113, 193)"
+        },
+        {
+            "type": "TRAM",
+            "lineNumber": "5",
+            "color": "rgb(255, 255, 255)",
+            "backgroundColor": "rgb(198, 53, 57)"
+        },
+        {
+            "type": "TRAM",
+            "lineNumber": "8",
+            "color": "rgb(255, 255, 255)",
+            "backgroundColor": "rgb(165, 68, 154)"
+        },
+        {
+            "type": "TRAM",
+            "lineNumber": "6",
+            "color": "rgb(0, 67, 92)",
+            "backgroundColor": "rgb(248, 152, 40)"
+        }
+    ],
+    "paths": [
+        {
+            "type": [
+                "TRAM"
+            ],
+            "from": "Svingeln",
+            "to": "Ullevi Norra",
+            "coords": [
+                [
+                    11.990822,
+                    57.712588
+                ],
+                [
+                    11.990634,
+                    57.71217
+                ]
+            ]
+        }
+    ],
+    "lines": [
+        {
+            "number": "8",
+            "name": "Mot Frölunda",
+            "startHours": 0,
+            "startMinutes": 0,
+            "stops": [
+                "Svingeln",
+                "Ullevi Norra",
+                "Ullevi Södra",
+                "Scandinavium",
+                "Korsvägen"
+            ]
+        },
+        {
+            "number": "5",
+            "name": "Mot Östra Sjukhuset",
+            "startHours": 0,
+            "startMinutes": 30,
+            "stops": [
+                "Korsvägen",
+                "Liseberg Station",
+                "Sankt Sigfrids Plan"
+            ]
+        },
+        {
+            "number": "3",
+            "name": "Mot Kålltorp",
+            "startHours": 0,
+            "startMinutes": 45,
+            "stops": [
+                "Svingeln",
+                "Olskrokstorget",
+                "Redbergsplatsen",
+                "Stockholmsgatan",
+                "Härlanda",
+                "Solrosgatan",
+                "Sanatoriegatan",
+                "Virginsgatan"
+            ]
+        },
+        {
+            "number": "5",
+            "name": "Mot Länsmansgården",
+            "startHours": 0,
+            "startMinutes": 30,
+            "stops": [
+                "Virginsgatan",
+                "Welandergatan",
+                "Töpelsgatan",
+                "Bögatan",
+                "Ekmanska",
+                "Bäckeliden",
+                "Sankt Sigfrids Plan"
+            ]
+        },
+        {
+            "number": "6",
+            "name": "Spårvagn Mot Länsmansgården via Sahlgrenska",
+            "startHours": 0,
+            "startMinutes": 21,
+            "stops": [
+                "Svingeln",
+                "Ullevi Norra",
+                "Ullevi Södra",
+                "Scandinavium",
+                "Korsvägen"
+            ]
+        }
+    ]
 }
