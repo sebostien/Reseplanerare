@@ -105,6 +105,21 @@ const SearchResultItem = (props: PathProps): JSX.Element => {
 	const first = path[0];
 	const last = path[path.length - 1];
 
+	const lineNumbers = [...new Set(path.map((l) => l.lineNumber))].map(
+		(lineNumber) => {
+			let style = OUT_STYLES.get(lineNumber) as LineStyle;
+			return (
+				<span
+					key={lineNumber}
+					style={style}
+					className="mx-1 pt-1 pb-1 pr-2 pl-2 rounded-md"
+				>
+					{lineNumber}
+				</span>
+			);
+		},
+	);
+
 	return (
 		<li
 			className={
@@ -122,7 +137,8 @@ const SearchResultItem = (props: PathProps): JSX.Element => {
 		>
 			<div className="p-3 flex justify-between">
 				<div className="flex flex-nowrap flex-grow-1 pr-3 pb-1">
-					{first.fromStop.stopName}
+					<div>{first.fromStop.stopName}</div>
+					<div className="p-2">{lineNumbers}</div>
 				</div>
 				<div className="text-right flex-grow-0 flex-shrink">
 					<div className="">

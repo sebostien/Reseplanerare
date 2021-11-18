@@ -279,13 +279,12 @@
         },
         {
             "number": "6",
-            "name": "Mot Länsmansgården via Sahlgrenska",
+            "name": "Spårvagn Mot Frihamnen via Sahlgrenska",
             "startTimes": [
+                "15:19",
+                "16:21",
+                "16:31",
                 "16:41",
-                "16:51",
-                "16:59",
-                "17:08",
-                "17:16",
                 "17:36"
             ],
             "stops": [

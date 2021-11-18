@@ -12,7 +12,7 @@ const Main = () => {
 	let [fromStop, setFromStop] = useState('Svingeln');
 	let [toStop, setToStop] = useState('Sankt Sigfrids Plan');
 	let [selectedPath, setSelectedPath] = useState(0);
-	let [startTime, setStartTime] = useState('16:30');
+	let [startTime, setStartTime] = useState('16:37');
 	let [paths, setPaths] = useState<Line[][]>([]);
 	let [isMounted, setIsMounted] = useState(false);
 
