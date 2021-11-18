@@ -1,63 +1,39 @@
-import React, { useState } from 'react';
-import useSWR from 'swr';
-import Loading from './Loading';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import MapNoSSR from '../components/NoSSR';
 import DisplayPath from '../components/DisplayPath';
 import Input from '../components/Input';
-import { ApiPath } from '../pages/api/pathFind';
-import { Stop } from '../util/DataTypes';
-import { ReturnGeoData } from '../pages/api/geoJson';
-import { parseTime } from '../util/Time';
+import { OUT_STOPS } from '../util/ParseData';
+import pathFind from '../util/pathFind';
+import { Line } from '../util/DataTypes';
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-const usePathSWR = (
-	stops: Record<string, Stop>,
-	fromStop: string,
-	toStop: string,
-	time: string,
-): ApiPath => {
-	const { data, error } = useSWR<ApiPath>(
-		`/api/pathFind?from=${fromStop}&to=${toStop}&time=${time}`,
-		fetcher,
-	);
-	const stopNames = Object.keys(stops);
-	if (!stopNames.includes(fromStop) || !stopNames.includes(toStop))
-		return { paths: [] };
-
-	if (data === undefined) return { paths: [] };
-
-	return data;
-};
-
 const Main = () => {
 	let [fromStop, setFromStop] = useState('Svingeln');
-	let [toStop, setToStop] = useState('Sankt Sigfrids plan');
+	let [toStop, setToStop] = useState('Sankt Sigfrids Plan');
 	let [selectedPath, setSelectedPath] = useState(0);
 	let [startTime, setStartTime] = useState('16:30');
+	let [paths, setPaths] = useState<Line[][]>([]);
+	let [isMounted, setIsMounted] = useState(false);
 
-	const { data, error } = useSWR<ReturnGeoData>(
-		'/api/geoJson?time=' + startTime,
-		fetcher,
-		{
-			revalidateOnFocus: false,
-			fallbackData: { stops: {} },
-		},
-	);
-	const { paths } = usePathSWR(
-		data?.stops || {},
-		fromStop,
-		toStop,
-		startTime,
-	);
+	useMemo(() => {
+		if (!isMounted) return;
+		if (startTime.length != 5) return;
+		const pp = pathFind(fromStop, toStop, startTime);
+		setPaths(pp);
+	}, [fromStop, toStop, startTime, isMounted]);
 
-	if (!data) return <Loading />;
+	useEffect(() => {
+		setIsMounted(true);
+
+		return () => setIsMounted(false);
+	}, []);
 
 	return (
 		<div className="flex min-h-screen">
 			<div className="flex-initial p-1 h-screen overflow-y-scroll overflow-x-hidden">
 				<Input
-					stops={data.stops}
+					stops={OUT_STOPS}
 					value={fromStop}
 					name="from"
 					onChange={(t) => {
@@ -67,7 +43,7 @@ const Main = () => {
 					placeholder="Från..."
 				/>
 				<Input
-					stops={data.stops}
+					stops={OUT_STOPS}
 					value={toStop}
 					name="to"
 					onChange={(t) => {
@@ -89,18 +65,13 @@ const Main = () => {
 				/>
 				<DisplayPath
 					paths={paths}
-					geoJson={data}
-					fromStop={fromStop}
-					toStop={toStop}
 					selectedPath={selectedPath}
 					setSelectedPath={setSelectedPath}
 				/>
 			</div>
 			<div className="flex-initial p-2 w-full h-screen">
 				<MapNoSSR
-					selectedPath={selectedPath}
-					paths={paths}
-					geoJson={data}
+					path={paths[selectedPath] || []}
 					fromStop={fromStop}
 					toStop={toStop}
 				/>

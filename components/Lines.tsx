@@ -1,87 +1,75 @@
 import { NextPage } from 'next';
 import React, { ReactElement, useState } from 'react';
 import { Source, Layer, LayerProps } from 'react-map-gl';
-import { ReturnGeoData } from '../pages/api/geoJson';
-import { Line, Stop } from '../util/DataTypes';
+import { Coord, Line, LineStyle, StopPoint } from '../util/DataTypes';
 import _ from 'lodash';
-import { Path } from '../pages/api/pathFind';
+import { OUT_STOPS, OUT_STYLES, styleHash } from '../util/ParseData';
 
 interface Props {
-	geoJson: ReturnGeoData;
-	fromStop: string;
-	toStop: string;
-	paths: Path[];
-	selectedPath: number;
+	path: Line[];
 }
 
 const Lines: NextPage<Props> = (props) => {
-	const { geoJson, paths, fromStop, toStop, selectedPath } = props;
-
-	// TODO: add selected path
+	const { path } = props;
 
 	const allLines = new Map<string, GeoJSON.Feature[]>();
 
-	if (paths.length === 0 || paths[0].lines.length === 0) return <></>;
+	if (path.length === 0) return <></>;
 
 	const allLayers: ReactElement[] = [];
+	const lineNumbers = new Set(path.map(({ lineNumber }) => lineNumber));
 
-	// for (let i = 0; i < paths.length; i++) {
-	for (let i = selectedPath; i <= selectedPath; i++) {
-		const lineName = new Set(
-			paths[i].lines.map(({ lineName }) => lineName),
+	for (const lineNumber of lineNumbers) {
+		const style = OUT_STYLES.get(styleHash(lineNumber)) as LineStyle;
+
+		const lineLayer: LayerProps = {
+			type: 'line',
+			id: 'line-' + lineNumber,
+			source: 'mapbox',
+			layout: {
+				'line-join': 'round',
+				'line-cap': 'round',
+			},
+			filter: ['==', lineNumber, ['get', 'lineNumber']],
+			paint: {
+				'line-color': style.backgroundColor,
+				'line-width': 5,
+			},
+		};
+
+		allLayers.push(
+			<Layer {...lineLayer} key={'Layer-line-' + lineNumber} />,
 		);
+	}
 
-		for (let name of lineName) {
-			const lineLayer: LayerProps = {
-				type: 'line',
-				id: name,
-				source: 'mapbox',
-				layout: {
-					'line-join': 'round',
-					'line-cap': 'round',
-				},
-				filter: ['==', name, ['get', 'name']],
-				paint: {
-					'line-color': paths[i].lines.filter(
-						(v) => v.lineName == name,
-					)[0].styles.backgroundColor,
-					'line-width': 5,
-				},
-			};
-
-			allLayers.push(<Layer {...lineLayer} key={name} />);
+	for (let line of path) {
+		let lii = allLines.get(line.lineName);
+		if (!lii) {
+			lii = [];
 		}
 
-		for (let line of paths[i].lines) {
-			let lii = allLines.get(line.lineName);
-			if (!lii) {
-				lii = [];
-			}
+		let coords: Coord[] = [];
+		let fromCoords = OUT_STOPS.get(line.fromStop.stopName)?.coords as Coord;
+		coords.push(fromCoords);
 
-			let coords = [];
-			let fromCoords = geoJson.stops[line.from];
+		// TODO: add coords from LinePath
+		// coords = coords.concat(line.coords.map(({ lng, lat }) => [lng, lat]));
 
-			coords.push([fromCoords.lng, fromCoords.lat]);
-			coords = coords.concat(
-				line.coords.map(({ lng, lat }) => [lng, lat]),
-			);
-			let toCoords = geoJson.stops[line.to];
+		let toCoords = OUT_STOPS.get(line.toStop.stopName)?.coords as Coord;
+		coords.push(toCoords);
 
-			coords.push([toCoords.lng, toCoords.lat]);
+		lii.push({
+			type: 'Feature',
+			properties: {
+				lineNumber: line.lineNumber,
+			},
+			geometry: {
+				type: 'LineString',
+				coordinates: coords,
+			},
+		});
 
-			lii.push({
-				type: 'Feature',
-				properties: {
-					name: line.lineName,
-				},
-				geometry: {
-					type: 'LineString',
-					coordinates: coords,
-				},
-			});
-
-			allLines.set(line.lineName, lii);
-		}
+		allLines.set(line.lineName, lii);
 	}
 
 	const data: GeoJSON.FeatureCollection = {
