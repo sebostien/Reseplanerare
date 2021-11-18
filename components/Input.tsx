@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { Stop } from '../util/DataTypes';
+import { StopPoint } from '../util/DataTypes';
 
 interface Props {
-	stops: Stop[];
+	stops: Map<string, StopPoint>;
 	name: string;
 	placeholder: string;
 	value: string | number;
@@ -11,7 +11,7 @@ interface Props {
 
 const Input = (props: React.PropsWithChildren<Props>) => {
 	const { stops } = props;
-	const stopNames = stops.map(({ name }) => name) || [];
+	const stopNames = [...stops.keys()];
 	return (
 		<>
 			<input
@@ -30,10 +30,10 @@ const Input = (props: React.PropsWithChildren<Props>) => {
 				}}
 			/>
 			<datalist className="" id="dl-stops">
-				{stops.map((stop) => {
+				{[...stops.values()].map((stop) => {
 					return (
-						<option key={stop.name} value={stop.name}>
-							{stop.name}
+						<option key={stop.stopName} value={stop.stopName}>
+							{stop.stopName}
 						</option>
 					);
 				})}

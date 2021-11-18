@@ -1,18 +1,15 @@
 import { NextPage } from 'next';
 import React, { useState } from 'react';
 import MapGL from 'react-map-gl';
-import { ReturnGeoData } from '../pages/api/geoJson';
 import { Line } from '../util/DataTypes';
 import Lines from './Lines';
 import Pins from './Pins';
 
 interface Props {
 	className?: string;
-	geoJson: ReturnGeoData;
 	fromStop: string;
 	toStop: string;
-	paths: Line[][];
-	selectedPath: number;
+	path: Line[];
 }
 
 const Map: NextPage<Props> = (props) => {
@@ -22,7 +19,7 @@ const Map: NextPage<Props> = (props) => {
 		zoom: 13.5,
 	});
 
-	const { geoJson, fromStop, toStop, paths, selectedPath } = props;
+	const { fromStop, toStop, path } = props;
 
 	return (
 		<MapGL
@@ -36,19 +33,8 @@ const Map: NextPage<Props> = (props) => {
 			mapboxApiAccessToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN}
 			onViewportChange={setViewport}
 		>
-			<Pins
-				path={paths[selectedPath]}
-				geoJson={geoJson}
-				fromStop={fromStop}
-				toStop={toStop}
-			/>
-			<Lines
-				selectedPath={selectedPath}
-				geoJson={geoJson}
-				fromStop={fromStop}
-				toStop={toStop}
-				paths={paths}
-			/>
+			<Pins path={path} fromStop={fromStop} toStop={toStop} />
+			<Lines path={path} />
 		</MapGL>
 	);
 };
