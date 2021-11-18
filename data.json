@@ -276,6 +276,25 @@
                 "Bäckeliden",
                 "Sankt Sigfrids Plan"
             ]
+        },
+        {
+            "number": "6",
+            "name": "Mot Länsmansgården via Sahlgrenska",
+            "startTimes": [
+                "16:41",
+                "16:51",
+                "16:59",
+                "17:08",
+                "17:16",
+                "17:36"
+            ],
+            "stops": [
+                "Svingeln",
+                "Ullevi Norra",
+                "Ullevi Södra",
+                "Scandinavium",
+                "Korsvägen"
+            ]
         }
     ]
 }

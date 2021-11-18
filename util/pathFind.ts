@@ -100,13 +100,14 @@ const pathFind = (from: string, to: string, time: string): Line[][] => {
 		return [];
 	}
 
+	// TODO: avoid events
 	const visited = new Set<string>([fromName.trim()]);
 	const paths = DFS(visited, fromName.trim(), toName.trim(), startTime, '');
 
-	console.log(paths.length);
+	// TODO: filter lines that does the same thing e.g.
+	// a -> c === a -> b -> c, if the departure and arriving time is the same
 
-	// TODO: avoid events
-	// TODO: sort paths based on arriving time and return max 3 paths
+	console.log(paths.length);
 
 	return paths
 		.sort((a, b) => {
