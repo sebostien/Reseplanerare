@@ -189,8 +189,38 @@
         {
             "number": "8",
             "name": "Mot Frölunda",
-            "startHours": 0,
-            "startMinutes": 0,
+            "startTimes": [
+                "06:18",
+                "06:41",
+                "06:59",
+                "07:27",
+                "07:34",
+                "07:59",
+                "08:25",
+                "10:03",
+                "10:43",
+                "11:03",
+                "11:33",
+                "12:13",
+                "12:43",
+                "13:43",
+                "14:04",
+                "14:43",
+                "15:14",
+                "15:40",
+                "16:08",
+                "16:36",
+                "17:00",
+                "17:20",
+                "17:48",
+                "18:26",
+                "18:59",
+                "19:35",
+                "20:35",
+                "21:35",
+                "22:35",
+                "23:35"
+            ],
             "stops": [
                 "Svingeln",
                 "Ullevi Norra",
@@ -202,8 +232,10 @@
         {
             "number": "5",
             "name": "Mot Östra Sjukhuset",
-            "startHours": 0,
-            "startMinutes": 30,
+            "startTimes": [
+                "00:30",
+                "17:18"
+            ],
             "stops": [
                 "Korsvägen",
                 "Liseberg Station",
@@ -213,8 +245,10 @@
         {
             "number": "3",
             "name": "Mot Kålltorp",
-            "startHours": 0,
-            "startMinutes": 45,
+            "startTimes": [
+                "00:00",
+                "17:04"
+            ],
             "stops": [
                 "Svingeln",
                 "Olskrokstorget",
@@ -229,8 +263,10 @@
         {
             "number": "5",
             "name": "Mot Länsmansgården",
-            "startHours": 0,
-            "startMinutes": 30,
+            "startTimes": [
+                "00:30",
+                "17:19"
+            ],
             "stops": [
                 "Virginsgatan",
                 "Welandergatan",
@@ -239,19 +275,6 @@
                 "Ekmanska",
                 "Bäckeliden",
                 "Sankt Sigfrids Plan"
-            ]
-        },
-        {
-            "number": "6",
-            "name": "Spårvagn Mot Länsmansgården via Sahlgrenska",
-            "startHours": 0,
-            "startMinutes": 21,
-            "stops": [
-                "Svingeln",
-                "Ullevi Norra",
-                "Ullevi Södra",
-                "Scandinavium",
-                "Korsvägen"
             ]
         }
     ]

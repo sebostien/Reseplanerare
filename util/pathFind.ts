@@ -14,7 +14,7 @@ const findPathsFrom = (
 
 	outgoing = outgoing.filter((line) => {
 		// If we are on the same line. We must continue directly
-		// We can't get off and take a later bus on the same line
+		// We can't get off and take a later bus on the same exact same line
 		if (line.lineName === currentLine) {
 			return startTime.isAfterOrEqual(line.departure);
 		}
@@ -23,6 +23,8 @@ const findPathsFrom = (
 	});
 
 	outgoing = outgoing.filter((line) => {
+		// TODO: add walking, can walk any time
+
 		// Add 60 seconds to make line change, only if not first stop on path
 		// if (prevLine !== 'first' && prevLine !== v.lineNumber + v.lineName)
 		// 	return (startTime as number) + 60 <= v.departure;

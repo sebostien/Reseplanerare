@@ -130,19 +130,18 @@ for (const line of DATA.lines) {
 		}
 	}
 
-	let startHours = line.startHours;
-	let startMinutes = line.startMinutes;
-
-	if (startHours === undefined || startHours === undefined) {
-		throw new Error(`In lines: time is missing at line ${line.name}`);
+	let startTimes = line.startTimes;
+	for (let time of startTimes) {
+		if (!TimeDate.fromString(time))
+			throw new Error(
+				`In lines: time is incorrect at line ${line.name}, time: ${time}`,
+			);
 	}
 
-	const constDate = TimeDate.fromString(`${startHours}:${startMinutes}`);
-	if (constDate.hours === 0 && constDate.minutes === 0) constDate.addHours(1);
-	let startDate = new TimeDate(0, 0);
-
-	for (let j = 0; startDate.days < 2; j++) {
+	for (let time of startTimes) {
+		let startDate = TimeDate.fromString(time);
 		let lastStop = line.stops[0];
+
 		for (let i = 1; i < line.stops.length; i++) {
 			OUT_LINES.push(
 				Object.freeze({
@@ -166,7 +165,6 @@ for (const line of DATA.lines) {
 
 			lastStop = line.stops[i];
 		}
-		startDate.add(constDate);
 	}
 }
 

@@ -18,12 +18,15 @@ const Main = () => {
 
 	useMemo(() => {
 		if (!isMounted) return;
+		if (startTime.length != 5) return;
 		const pp = pathFind(fromStop, toStop, startTime);
 		setPaths(pp);
 	}, [fromStop, toStop, startTime, isMounted]);
 
 	useEffect(() => {
 		setIsMounted(true);
+
+		return () => setIsMounted(false);
 	}, []);
 
 	return (

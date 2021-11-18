@@ -57,8 +57,7 @@ export type DataJSON = {
 	lines: {
 		number: string;
 		name: string;
-		startHours: number;
-		startMinutes: number;
+		startTimes: string[];
 		stops: string[];
 	}[];
 };

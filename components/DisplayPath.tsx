@@ -22,7 +22,11 @@ const DisplayPath: NextPage<Props> = (props) => {
 			itemIndex={i}
 			selectedPath={selectedPath}
 			setSelectedPath={setSelectedPath}
-			key={path[0].lineName + path[path.length - 1].arriving.hhmm()}
+			key={
+				path[0].departure.hhmm() +
+				path[0].lineName +
+				path[path.length - 1].arriving.hhmm()
+			}
 			path={path}
 		/>
 	));
