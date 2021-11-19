@@ -44,8 +44,8 @@
         {
             "name": "Chalmers",
             "coords": [
-                11.97298,
-                57.690075
+                11.972917,
+                57.690035
             ]
         },
         {
@@ -233,7 +233,8 @@
                 "Ullevi Norra",
                 "Ullevi Södra",
                 "Scandinavium",
-                "Korsvägen"
+                "Korsvägen",
+                "Chalmers"
             ]
         },
         {
@@ -299,7 +300,8 @@
                 "Ullevi Norra",
                 "Ullevi Södra",
                 "Scandinavium",
-                "Korsvägen"
+                "Korsvägen",
+                "Chalmers"
             ]
         }
     ]
