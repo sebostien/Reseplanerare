@@ -1,3 +1,4 @@
+import AnimateHeight from 'react-animate-height';
 import { Line, LineStyle, StopPoint } from '../util/DataTypes';
 import { OUT_STOPS, OUT_STYLES } from '../util/ParseData';
 import TimeDate from '../util/Time';
@@ -112,7 +113,7 @@ const SearchResultItem = (props: PathProps): JSX.Element => {
 				<span
 					key={lineNumber}
 					style={style}
-					className="mx-1 pt-1 pb-1 pr-2 pl-2 rounded-md"
+					className="mr-1 py-1 px-2 rounded-md"
 				>
 					{lineNumber}
 				</span>
@@ -133,14 +134,13 @@ const SearchResultItem = (props: PathProps): JSX.Element => {
 				last.lineName +
 				last.arriving.hhmm()
 			}
-			onClick={() => setSelectedPath(itemIndex)}
 		>
-			<div className="p-3 flex justify-between">
-				<div className="flex flex-nowrap flex-grow-1 pr-3 pb-1">
+			<div className="p-3 h-24">
+				<div className="pb-1 float-left">
 					<div>{first.fromStop.stopName}</div>
-					<div className="p-2">{lineNumbers}</div>
+					<div className="py-2">{lineNumbers}</div>
 				</div>
-				<div className="text-right flex-grow-0 flex-shrink">
+				<div className="float-right">
 					<div className="">
 						<span className="font-bold">
 							{first.departure.hhmm()}
@@ -156,24 +156,36 @@ const SearchResultItem = (props: PathProps): JSX.Element => {
 						).hm()}
 					</div>
 				</div>
+				<button
+					onClick={() => setSelectedPath(itemIndex)}
+					className="relative left-52 top-12 text-blue-500 text-2xl"
+				>
+					⊕
+				</button>
 			</div>
-			<div
-				// TODO: transition height
-				className={
-					'm-3 border-gray-500 overflow-hidden ' +
-					(itemIndex === selectedPath ? '' : 'h-0')
-				}
+			<AnimateHeight
+				duration={200}
+				height={itemIndex === selectedPath ? 'auto' : 0}
 			>
-				{path.map((stop) => {
-					let change = changeTransportType(
-						prev,
-						stop,
-						last.arriving.hhmm(),
-					);
-					prev = stop;
-					return change;
-				})}
-			</div>
+				<div className="h-4 text-center">
+					<div className="inline-block w-4/5 border-b-2 border-gray-500">
+						{' '}
+					</div>
+				</div>
+				<div>
+					<div className={'m-3 border-gray-500 overflow-hidden'}>
+						{path.map((stop) => {
+							let change = changeTransportType(
+								prev,
+								stop,
+								last.arriving.hhmm(),
+							);
+							prev = stop;
+							return change;
+						})}
+					</div>
+				</div>
+			</AnimateHeight>
 		</li>
 	);
 };
