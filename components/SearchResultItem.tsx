@@ -92,6 +92,31 @@ const changeTransportType = (prev: null | Line, current: Line, key: string) => {
 	);
 };
 
+interface ExpandButtonProps {
+	expanded: boolean;
+	onClick: () => void;
+}
+
+const ExpandButton = (props: ExpandButtonProps) => {
+	const style = {
+		backgroundImage: '',
+	};
+
+	if (props.expanded) {
+		style.backgroundImage = 'url(/images/minus-circle-blue.svg)';
+	} else {
+		style.backgroundImage = 'url(/images/plus-circle-blue.svg)';
+	}
+
+	return (
+		<button
+			onClick={props.onClick}
+			className="mt-2 w-8 h-8 float-right"
+			style={style}
+		/>
+	);
+};
+
 interface PathProps {
 	itemIndex: number;
 	selectedPath: number;
@@ -135,12 +160,12 @@ const SearchResultItem = (props: PathProps): JSX.Element => {
 				last.arriving.hhmm()
 			}
 		>
-			<div className="p-3 h-24">
-				<div className="pb-1 float-left">
+			<div className="p-3 flex justify-between">
+				<div className="pb-1">
 					<div>{first.fromStop.stopName}</div>
 					<div className="py-2">{lineNumbers}</div>
 				</div>
-				<div className="float-right">
+				<div className="">
 					<div className="">
 						<span className="font-bold">
 							{first.departure.hhmm()}
@@ -155,13 +180,15 @@ const SearchResultItem = (props: PathProps): JSX.Element => {
 							first.departure,
 						).hm()}
 					</div>
+					<ExpandButton
+						onClick={() =>
+							itemIndex === selectedPath
+								? setSelectedPath(-1)
+								: setSelectedPath(itemIndex)
+						}
+						expanded={itemIndex === selectedPath}
+					/>
 				</div>
-				<button
-					onClick={() => setSelectedPath(itemIndex)}
-					className="relative left-52 top-12 text-blue-500 text-2xl"
-				>
-					⊕
-				</button>
 			</div>
 			<AnimateHeight
 				duration={200}

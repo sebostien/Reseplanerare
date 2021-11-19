@@ -1,9 +1,15 @@
 import { NextPage } from 'next';
 import React, { ReactElement, useState } from 'react';
 import { Source, Layer, LayerProps } from 'react-map-gl';
-import { Coord, Line, LineStyle, StopPoint } from '../util/DataTypes';
+import { Coord, Line, LinePath, LineStyle, StopPoint } from '../util/DataTypes';
 import _ from 'lodash';
-import { OUT_STOPS, OUT_STYLES, styleHash } from '../util/ParseData';
+import {
+	OUT_PATHS,
+	OUT_STOPS,
+	OUT_STYLES,
+	pathHash,
+	styleHash,
+} from '../util/ParseData';
 
 interface Props {
 	path: Line[];
@@ -52,8 +58,15 @@ const Lines: NextPage<Props> = (props) => {
 		let fromCoords = OUT_STOPS.get(line.fromStop.stopName)?.coords as Coord;
 		coords.push(fromCoords);
 
-		// TODO: add coords from LinePath
-		// coords = coords.concat(line.coords.map(({ lng, lat }) => [lng, lat]));
+		// Get all extra coordinates for the path if any exists
+		const style = OUT_STYLES.get(styleHash(line.lineNumber)) as LineStyle;
+		const pathCoords = OUT_PATHS.get(
+			pathHash(style.type, line.fromStop.stopName, line.toStop.stopName),
+		);
+
+		if (pathCoords !== undefined) {
+			coords = coords.concat(pathCoords.coords);
+		}
 
 		let toCoords = OUT_STOPS.get(line.toStop.stopName)?.coords as Coord;
 		coords.push(toCoords);
