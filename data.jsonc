@@ -1,3 +1,4 @@
+{
 "coords": [{
 		"type": "tram",
 		"from": "Svingeln",
@@ -77,4 +78,5 @@
 			}
 		]
 	}
-],
+]
+}

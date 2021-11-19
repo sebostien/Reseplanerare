@@ -42,6 +42,13 @@
             ]
         },
         {
+            "name": "Chalmers",
+            "coords": [
+                11.972917,
+                57.690035
+            ]
+        },
+        {
             "name": "Liseberg Station",
             "coords": [
                 11.994167,
@@ -226,7 +233,8 @@
                 "Ullevi Norra",
                 "Ullevi Södra",
                 "Scandinavium",
-                "Korsvägen"
+                "Korsvägen",
+                "Chalmers"
             ]
         },
         {
@@ -292,7 +300,8 @@
                 "Ullevi Norra",
                 "Ullevi Södra",
                 "Scandinavium",
-                "Korsvägen"
+                "Korsvägen",
+                "Chalmers"
             ]
         }
     ]
