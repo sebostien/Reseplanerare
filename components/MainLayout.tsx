@@ -73,7 +73,7 @@ const Main = () => {
 					}}
 					placeholder="Tid..."
 				/>
-				<TopWarning path={paths[selectedPath] || []} />
+				<TopWarning paths={paths} />
 				<DisplayPath
 					paths={paths}
 					selectedPath={selectedPath}

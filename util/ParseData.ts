@@ -1,4 +1,3 @@
-import { start } from 'repl';
 import DATA from '../data.json';
 import {
 	Coord,
@@ -7,7 +6,7 @@ import {
 	LinePath,
 	LineStyle,
 	Longitude,
-	PublicEvent,
+	WalkLine,
 	StopPoint,
 	TransportTypes,
 } from './DataTypes';
@@ -17,6 +16,7 @@ export const OUT_STOPS = new Map<string, StopPoint>();
 export const OUT_PATHS = new Map<string, LinePath>();
 export const OUT_STYLES = new Map<string, LineStyle>();
 export const OUT_LINES: Line[] = [];
+export const OUT_WALKS: WalkLine[] = [];
 
 export const pathHash = (
 	type: string | TransportTypes,
@@ -75,6 +75,33 @@ for (const styles of DATA.styles) {
 		lineNumber: styles.lineNumber,
 		color: styles.color,
 		backgroundColor: styles.backgroundColor,
+	});
+}
+
+for (const walkLine of DATA.walkLines) {
+	const tt = Object.values(TransportTypes) as string[];
+	if (!tt.includes(walkLine.type))
+		throw new Error(`In walkLines: type does not exist "${walkLine.type}"`);
+
+	const fromStop = OUT_STOPS.get(walkLine.fromStop);
+	if (fromStop === undefined)
+		throw new Error(
+			`In walkLines: stop does not exist "${walkLine.fromStop}"`,
+		);
+
+	const toStop = OUT_STOPS.get(walkLine.toStop);
+	if (toStop === undefined) {
+		throw new Error(
+			`In walkLines: stop does not exist "${walkLine.toStop}"`,
+		);
+	}
+	let duration = new TimeDate(0, walkLine.minutes);
+
+	OUT_WALKS.push({
+		type: walkLine.type as TransportTypes,
+		fromStop,
+		toStop,
+		duration,
 	});
 }
 

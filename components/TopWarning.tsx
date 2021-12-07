@@ -5,11 +5,11 @@ import { OUT_STOPS } from '../util/ParseData';
 import { LinePathFind } from '../util/pathFind';
 
 interface Props {
-	path: LinePathFind;
+	paths: LinePathFind[];
 }
 
 const TopWarning = (props: Props): JSX.Element => {
-	if (!props.path.hasEvent) return <></>;
+	if (!props.paths.some((v) => v.hasEvent)) return <></>;
 
 	return (
 		<div className="p-2">

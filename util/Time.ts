@@ -21,12 +21,13 @@ export default class TimeDate {
 		return date;
 	}
 
-	add(t: TimeDate) {
-		this.addHours(t.hours);
-		this.addMinutes(t.minutes);
-		this.days += t.days;
-		this.fixLimits();
-		return this;
+	static add(t1: TimeDate, t2: TimeDate) {
+		const d = t1.days + t2.days;
+		const h = t1.hours + t2.hours;
+		const m = t1.minutes + t2.minutes;
+		const date = new TimeDate(h, m, d);
+		date.fixLimits();
+		return date;
 	}
 
 	addHours(h: number) {
