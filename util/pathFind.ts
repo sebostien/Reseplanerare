@@ -162,7 +162,7 @@ const pathFind = (from: string, to: string, time: string): LinePathFind[] => {
 			return r;
 		});
 
-	paths = paths.sort((a, b) => {
+	paths.sort((a, b) => {
 		let l1 = a[a.length - 1];
 		let l2 = b[b.length - 1];
 		if (l1.arriving.days < l2.arriving.days) return -1;
@@ -176,20 +176,28 @@ const pathFind = (from: string, to: string, time: string): LinePathFind[] => {
 	});
 
 	// Set hasEvent if path has any events on the route
-	return paths
-		.map((line) => {
-			let hasEvent = line.some((v) => {
-				let a = OUT_STOPS.get(v.fromStop.stopName);
-				let b = OUT_STOPS.get(v.toStop.stopName);
+	return (
+		paths
+			.map((line) => {
+				let hasEvent = line.some((v) => {
+					let a = OUT_STOPS.get(v.fromStop.stopName);
+					let b = OUT_STOPS.get(v.toStop.stopName);
 
-				return a?.events.length !== 0 || b?.events.length !== 0;
-			});
-			return {
-				hasEvent,
-				path: line,
-			};
-		})
-		.slice(0, 5);
+					return a?.events.length !== 0 || b?.events.length !== 0;
+				});
+				return {
+					hasEvent,
+					path: line,
+				};
+			})
+			// Make routes with event show last
+			.sort((a, b) => {
+				if (a.hasEvent === b.hasEvent) return 0;
+				if (a.hasEvent) return 1;
+				return -1; // Only b has event
+			})
+			.slice(0, 5)
+	);
 };
 
 export default pathFind;
