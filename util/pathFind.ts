@@ -105,6 +105,8 @@ const pathFind = (from: string, to: string, time: string): Line[][] => {
 	const toName = to as string;
 	const stringTime = time as string;
 
+	if (fromName === toName) return [];
+
 	let startTime = TimeDate.fromString(stringTime.trim());
 
 	if (!startTime.isValid) {

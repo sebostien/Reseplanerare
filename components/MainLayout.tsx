@@ -34,6 +34,15 @@ const Main = () => {
 	return (
 		<div className="flex min-h-screen">
 			<div className="flex-initial p-1 h-screen overflow-y-scroll overflow-x-hidden">
+				<datalist id="dl-stops">
+					{[...OUT_STOPS.keys()].map((stop) => {
+						return (
+							<option key={stop} value={stop}>
+								{stop}
+							</option>
+						);
+					})}
+				</datalist>
 				<Input
 					stops={OUT_STOPS}
 					value={fromStop}

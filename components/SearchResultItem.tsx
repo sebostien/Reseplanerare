@@ -48,7 +48,6 @@ const changeTransportType = (prev: null | Line, current: Line, key: string) => {
 			{(() => {
 				if (prev !== null) {
 					return (
-						// TODO: format? hours minutes?
 						<p className="border-t-4 border-b-4 pl-2 border-dotted border-gray-500 mt-1 mb-3">
 							Bytestid{' '}
 							{TimeDate.timeBetween(
