@@ -3,9 +3,10 @@ import * as React from 'react';
 import Loading from './Loading';
 import { Line } from '../util/DataTypes';
 import SearchResultItem from './SearchResultItem';
+import { LinePathFind } from '../util/pathFind';
 
 interface Props {
-	paths: Line[][];
+	paths: LinePathFind[];
 	selectedPath: number;
 	setSelectedPath: React.Dispatch<React.SetStateAction<number>>;
 }
@@ -15,7 +16,7 @@ const DisplayPath: NextPage<Props> = (props) => {
 
 	if (!paths) return <Loading />;
 
-	if (paths.length == 0 || paths[0].length == 0) return <></>;
+	if (paths.length == 0 || paths[0].path.length == 0) return <></>;
 
 	const pathsJSX = paths.map((path, i) => (
 		<SearchResultItem
@@ -23,11 +24,11 @@ const DisplayPath: NextPage<Props> = (props) => {
 			selectedPath={selectedPath}
 			setSelectedPath={setSelectedPath}
 			key={
-				path[0].departure.hhmm() +
-				path[0].lineName +
-				path[path.length - 1].arriving.hhmm()
+				path.path[0].departure.hhmm() +
+				path.path[0].lineName +
+				path.path[path.path.length - 1].arriving.hhmm()
 			}
-			path={path}
+			linePath={path}
 		/>
 	));
 

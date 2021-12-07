@@ -19,6 +19,7 @@ export enum TransportTypes {
 	TRAM = 'TRAM',
 	WALK = 'WALK',
 	BUS = 'BUS',
+	CYCLE = 'CYCLE',
 }
 
 export type Line = {
@@ -45,6 +46,12 @@ export type LineStyle = {
 	backgroundColor: string;
 };
 
+export type WalkLine = {
+	type: TransportTypes;
+	fromStop: StopPoint;
+	toStop: StopPoint;
+	duration: TimeDate;
+};
 export type DataJSON = {
 	stops: StopPoint[];
 	styles: LineStyle[];
@@ -53,6 +60,11 @@ export type DataJSON = {
 		from: string;
 		to: string;
 		coords: Coord[];
+	}[];
+	walkLines: {
+		fromStop: string;
+		toStop: string;
+		minutes: number;
 	}[];
 	lines: {
 		number: string;

@@ -1,6 +1,6 @@
 import { Line, StopPoint } from './DataTypes';
 import TimeDate from './Time';
-import { OUT_LINES, OUT_PATHS, OUT_STOPS } from './ParseData';
+import { OUT_LINES, OUT_PATHS, OUT_STOPS, OUT_WALKS } from './ParseData';
 
 const findPathsFrom = (
 	from: string,
@@ -12,19 +12,32 @@ const findPathsFrom = (
 		({ fromStop }) => fromStop.stopName === from,
 	);
 
+	// Add any paths possible to walk
+	for (let walkLine of OUT_WALKS) {
+		if (walkLine.fromStop.stopName === from) {
+			outgoing.push({
+				lineName: walkLine.type,
+				lineNumber: walkLine.type,
+				transportType: walkLine.type,
+				departure: startTime,
+				arriving: TimeDate.add(startTime, walkLine.duration),
+				fromStop: walkLine.fromStop,
+				toStop: walkLine.toStop,
+			});
+		}
+	}
+
 	outgoing = outgoing.filter((line) => {
 		// If we are on the same line. We must continue directly
 		// We can't get off and take a later bus on the same exact same line
 		if (line.lineName === currentLine) {
 			return startTime.isAfterOrEqual(line.departure);
 		}
-		// TODO: prevLines
+
 		return true;
 	});
 
 	outgoing = outgoing.filter((line) => {
-		// TODO: add walking, can walk any time
-
 		// Add 60 seconds to make line change, only if not first stop on path
 		// if (prevLine !== 'first' && prevLine !== v.lineNumber + v.lineName)
 		// 	return (startTime as number) + 60 <= v.departure;
@@ -43,8 +56,8 @@ const findPathsFrom = (
 	});
 
 	// Necessary to reduce the number of permutations.
-	// Would be 200000 ways to navigate the network without this
-	return outgoing.slice(0, 3);
+	// Would be !'200000'! ways to navigate the network without this
+	return outgoing.slice(0, 7);
 };
 
 const copySet = (set: Set<string>): Set<string> => {
@@ -100,10 +113,14 @@ const DFS = (
 	return paths;
 };
 
-const pathFind = (from: string, to: string, time: string): Line[][] => {
+export type LinePathFind = { path: Line[]; hasEvent: boolean };
+
+const pathFind = (from: string, to: string, time: string): LinePathFind[] => {
 	const fromName = from as string;
 	const toName = to as string;
 	const stringTime = time as string;
+
+	if (fromName === toName) return [];
 
 	let startTime = TimeDate.fromString(stringTime.trim());
 
@@ -112,16 +129,9 @@ const pathFind = (from: string, to: string, time: string): Line[][] => {
 		return [];
 	}
 
-	// TODO: avoid events
 	const visited = new Set<string>([fromName.trim()]);
 	let paths = DFS(visited, fromName.trim(), toName.trim(), startTime, '');
 
-	// TODO: filter lines that does the same thing e.g.
-	// a -> c === a -> b -> c, if the departure and arriving time is the same
-
-	// TODO: avoid events
-
-	// TODO: Maybe sort on arriving time first and then travel time?
 	// Sort the paths based on the shortest travel time
 	const linePaths = new Set<string>();
 	paths = paths
@@ -152,9 +162,7 @@ const pathFind = (from: string, to: string, time: string): Line[][] => {
 			return r;
 		});
 
-	console.log(paths.length);
-
-	return paths.sort((a, b) => {
+	paths.sort((a, b) => {
 		let l1 = a[a.length - 1];
 		let l2 = b[b.length - 1];
 		if (l1.arriving.days < l2.arriving.days) return -1;
@@ -166,7 +174,30 @@ const pathFind = (from: string, to: string, time: string): Line[][] => {
 
 		return 0;
 	});
-	// .slice(0, 3);
+
+	// Set hasEvent if path has any events on the route
+	return (
+		paths
+			.map((line) => {
+				let hasEvent = line.some((v) => {
+					let a = OUT_STOPS.get(v.fromStop.stopName);
+					let b = OUT_STOPS.get(v.toStop.stopName);
+
+					return a?.events.length !== 0 || b?.events.length !== 0;
+				});
+				return {
+					hasEvent,
+					path: line,
+				};
+			})
+			// Make routes with event show last
+			.sort((a, b) => {
+				if (a.hasEvent === b.hasEvent) return 0;
+				if (a.hasEvent) return 1;
+				return -1; // Only b has event
+			})
+			.slice(0, 5)
+	);
 };
 
 export default pathFind;

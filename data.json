@@ -145,9 +145,35 @@
                 12.003551,
                 57.699909
             ]
+        },
+        {
+            "name": "Svingeln Styr & Ställ",
+            "coords": [
+                11.991380,
+                57.712966
+            ]
+        },
+        {
+            "name": "Liseberg Station Styr & Ställ",
+            "coords": [
+                11.995140,
+                57.697902
+            ]
         }
     ],
     "styles": [
+        {
+            "type": "WALK",
+            "lineNumber": "WALK",
+            "backgroundColor": "rgb(0, 200, 0)",
+            "color": "#ffffff"
+        },
+        {
+            "type": "CYCLE",
+            "lineNumber": "CYCLE",
+            "backgroundColor": "rgb(0, 255, 0)",
+            "color": "#ffffff"
+        },
         {
             "type": "TRAM",
             "lineNumber": "3",
@@ -283,6 +309,38 @@
                     57.717258
                 ]
             ]
+        }
+    ],
+    "walkLines": [
+        {
+            "type": "WALK",
+            "fromStop": "Svingeln",
+            "toStop": "Sankt Sigfrids Plan",
+            "minutes": 29
+        },
+        {
+            "type": "CYCLE",
+            "fromStop": "Svingeln Styr & Ställ",
+            "toStop": "Liseberg Station Styr & Ställ",
+            "minutes": 20
+        },
+        {
+            "type": "CYCLE",
+            "fromStop": "Liseberg Station Styr & Ställ",
+            "toStop": "Svingeln Styr & Ställ",
+            "minutes": 20
+        },
+        {
+            "type": "WALK",
+            "fromStop": "Svingeln",
+            "toStop": "Svingeln Styr & Ställ",
+            "minutes": 1
+        },
+        {
+            "type": "WALK",
+            "fromStop": "Liseberg Station Styr & Ställ",
+            "toStop": "Sankt Sigfrids Plan",
+            "minutes": 3
         }
     ],
     "lines": [

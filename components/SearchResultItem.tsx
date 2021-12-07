@@ -1,7 +1,10 @@
 import AnimateHeight from 'react-animate-height';
-import { Line, LineStyle, StopPoint } from '../util/DataTypes';
+import { Line, LineStyle, StopPoint, TransportTypes } from '../util/DataTypes';
 import { OUT_STOPS, OUT_STYLES } from '../util/ParseData';
+import { LinePathFind } from '../util/pathFind';
 import TimeDate from '../util/Time';
+import Image from 'next/image';
+import LineSymbol from './LineSymbol';
 
 const changeTransportType = (prev: null | Line, current: Line, key: string) => {
 	if (prev != null && prev.lineNumber == current.lineNumber) {
@@ -32,8 +35,6 @@ const changeTransportType = (prev: null | Line, current: Line, key: string) => {
 		);
 	}
 
-	const styles = OUT_STYLES.get(current.lineNumber) as LineStyle;
-
 	return (
 		<div
 			key={
@@ -48,7 +49,6 @@ const changeTransportType = (prev: null | Line, current: Line, key: string) => {
 			{(() => {
 				if (prev !== null) {
 					return (
-						// TODO: format? hours minutes?
 						<p className="border-t-4 border-b-4 pl-2 border-dotted border-gray-500 mt-1 mb-3">
 							Bytestid{' '}
 							{TimeDate.timeBetween(
@@ -61,12 +61,19 @@ const changeTransportType = (prev: null | Line, current: Line, key: string) => {
 				}
 				return '';
 			})()}
-			<p className="mb-2">
-				<span style={styles} className="pt-1 pb-1 pr-2 pl-2 rounded-md">
+			<div className="mb-2">
+				<LineSymbol lineNumber={current.lineNumber} />
+				{/* <span style={styles} className="pt-1 pb-1 pr-2 pl-2 rounded-md">
 					{current.lineNumber}
-				</span>
-				<span className="ml-2">{current.lineName}</span>
-			</p>
+				</span> */}
+				{[TransportTypes.WALK, TransportTypes.CYCLE].includes(
+					current.lineName as TransportTypes,
+				) ? (
+					''
+				) : (
+					<span className="ml-2">{current.lineName}</span>
+				)}
+			</div>
 			<p>
 				<span className={'font-bold p-1'}>
 					{current.departure.hhmm()}
@@ -121,11 +128,12 @@ interface PathProps {
 	itemIndex: number;
 	selectedPath: number;
 	setSelectedPath: React.Dispatch<number>;
-	path: Line[];
+	linePath: LinePathFind;
 }
 
 const SearchResultItem = (props: PathProps): JSX.Element => {
-	const { path, selectedPath, setSelectedPath, itemIndex } = props;
+	const { linePath, selectedPath, setSelectedPath, itemIndex } = props;
+	const { path, hasEvent } = linePath;
 
 	let prev: Line | null = null;
 	const first = path[0];
@@ -133,16 +141,7 @@ const SearchResultItem = (props: PathProps): JSX.Element => {
 
 	const lineNumbers = [...new Set(path.map((l) => l.lineNumber))].map(
 		(lineNumber) => {
-			let style = OUT_STYLES.get(lineNumber) as LineStyle;
-			return (
-				<span
-					key={lineNumber}
-					style={style}
-					className="mr-1 py-1 px-2 rounded-md"
-				>
-					{lineNumber}
-				</span>
-			);
+			return <LineSymbol key={lineNumber} lineNumber={lineNumber} />;
 		},
 	);
 
@@ -190,6 +189,21 @@ const SearchResultItem = (props: PathProps): JSX.Element => {
 					/>
 				</div>
 			</div>
+			{!hasEvent ? (
+				''
+			) : (
+				<div className="p-3">
+					<span
+						className="h-4 pl-6 bg-no-repeat inline-block"
+						style={{
+							backgroundImage:
+								'url(/images/exclamation-triangle-orange-outline.svg)',
+						}}
+					>
+						Denna rutt påverkas av ett evenemang
+					</span>
+				</div>
+			)}
 			<AnimateHeight
 				duration={200}
 				height={itemIndex === selectedPath ? 'auto' : 0}
