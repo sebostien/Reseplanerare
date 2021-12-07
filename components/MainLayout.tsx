@@ -3,8 +3,7 @@ import MapNoSSR from '../components/NoSSR';
 import DisplayPath from '../components/DisplayPath';
 import Input from '../components/Input';
 import { OUT_STOPS } from '../util/ParseData';
-import pathFind from '../util/pathFind';
-import { Line } from '../util/DataTypes';
+import pathFind, { LinePathFind } from '../util/pathFind';
 import Svg from './Svg';
 import TopWarning from './TopWarning';
 
@@ -15,7 +14,7 @@ const Main = () => {
 	let [toStop, setToStop] = useState('Sankt Sigfrids Plan');
 	let [selectedPath, setSelectedPath] = useState(0);
 	let [startTime, setStartTime] = useState('16:37');
-	let [paths, setPaths] = useState<Line[][]>([]);
+	let [paths, setPaths] = useState<LinePathFind[]>([]);
 	let [isMounted, setIsMounted] = useState(false);
 
 	useMemo(() => {
@@ -83,7 +82,7 @@ const Main = () => {
 			</div>
 			<div className="flex-initial p-2 w-full h-screen">
 				<MapNoSSR
-					path={paths[selectedPath] || []}
+					path={paths[selectedPath]?.path || []}
 					fromStop={fromStop}
 					toStop={toStop}
 				/>

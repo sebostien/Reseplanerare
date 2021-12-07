@@ -100,7 +100,9 @@ const DFS = (
 	return paths;
 };
 
-const pathFind = (from: string, to: string, time: string): Line[][] => {
+export type LinePathFind = { path: Line[]; hasEvent: boolean };
+
+const pathFind = (from: string, to: string, time: string): LinePathFind[] => {
 	const fromName = from as string;
 	const toName = to as string;
 	const stringTime = time as string;
@@ -156,7 +158,7 @@ const pathFind = (from: string, to: string, time: string): Line[][] => {
 
 	console.log(paths.length);
 
-	return paths.sort((a, b) => {
+	paths = paths.sort((a, b) => {
 		let l1 = a[a.length - 1];
 		let l2 = b[b.length - 1];
 		if (l1.arriving.days < l2.arriving.days) return -1;
@@ -169,6 +171,20 @@ const pathFind = (from: string, to: string, time: string): Line[][] => {
 		return 0;
 	});
 	// .slice(0, 3);
+
+	// Set hasEvent if path has any events on the route
+	return paths.map((line) => {
+		let hasEvent = line.some((v) => {
+			let a = OUT_STOPS.get(v.fromStop.stopName);
+			let b = OUT_STOPS.get(v.toStop.stopName);
+
+			return a?.events.length !== 0 || b?.events.length !== 0;
+		});
+		return {
+			hasEvent,
+			path: line,
+		};
+	});
 };
 
 export default pathFind;

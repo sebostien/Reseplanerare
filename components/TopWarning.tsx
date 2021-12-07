@@ -2,23 +2,14 @@ import { NextPage } from 'next';
 import React, { ReactElement } from 'react';
 import { Line } from '../util/DataTypes';
 import { OUT_STOPS } from '../util/ParseData';
+import { LinePathFind } from '../util/pathFind';
 
 interface Props {
-	path: Line[];
+	path: LinePathFind;
 }
 
 const TopWarning = (props: Props): JSX.Element => {
-	let hasEvent = false;
-
-	for (let line of props.path) {
-		let e = OUT_STOPS.get(line.toStop.stopName);
-		if (e && e.events.length !== 0) {
-			hasEvent = true;
-			break;
-		}
-	}
-
-	if (!hasEvent) return <></>;
+	if (!props.path.hasEvent) return <></>;
 
 	return (
 		<div className="p-2">
