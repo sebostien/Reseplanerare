@@ -144,10 +144,19 @@ interface PathProps {
 	selectedPath: number;
 	setSelectedPath: React.Dispatch<number>;
 	linePath: LinePathFind;
+	showEvents: boolean;
+	eventStationNames: string;
 }
 
 const SearchResultItem = (props: PathProps): JSX.Element => {
-	const { linePath, selectedPath, setSelectedPath, itemIndex } = props;
+	const {
+		linePath,
+		selectedPath,
+		setSelectedPath,
+		itemIndex,
+		showEvents,
+		eventStationNames,
+	} = props;
 	const { path, hasEvent } = linePath;
 
 	let prev: Line | null = null;
@@ -164,11 +173,6 @@ const SearchResultItem = (props: PathProps): JSX.Element => {
 	const lineNumbers = lineNumbersss.map((lineNumber) => {
 		return <LineSymbol key={lineNumber} lineNumber={lineNumber} />;
 	});
-
-	const eventStationNames = path
-		.filter((v) => v.toStop.events.length !== 0)
-		.map((v) => v.toStop.stopName)
-		.join(', ');
 
 	return (
 		<li
@@ -220,23 +224,19 @@ const SearchResultItem = (props: PathProps): JSX.Element => {
 				height={itemIndex === selectedPath ? 'auto' : 0}
 			>
 				<p className="px-3">
-					{!hasEvent ? (
-						<p className="pb-2">
-							<span className="relative top-3">
-								<Image
-									width="36"
-									height="36"
-									alt="No traffic"
-									src="/images/crowded-dark.png"
-									className="inline-block"
-								/>
-							</span>
-							{/* TODO: station name */}
-							<span className="pl-2 inline-block">
-								Denna resa undviker pågående evenmang
-							</span>
-						</p>
-					) : (
+					{!hasEvent && showEvents ? (
+						<span>
+							<span
+								className="h-4 pl-8 bg-no-repeat bg-contain text-2xl"
+								style={{
+									backgroundImage:
+										'url(/images/crowded-dark.png)',
+								}}
+							></span>
+							{`Denna resa undviker pågående evenmang vid ` +
+								eventStationNames}
+						</span>
+					) : showEvents ? (
 						<span
 							className="h-4 pl-8 bg-no-repeat"
 							style={{
@@ -247,6 +247,8 @@ const SearchResultItem = (props: PathProps): JSX.Element => {
 							{`Denna resa kan drabbas av ökad trängsel och
 							försening på grund av pågående evenemang vid ` + eventStationNames}
 						</span>
+					) : (
+						''
 					)}
 				</p>
 				<div className="h-4 text-center">
