@@ -40,7 +40,7 @@ interface Props {
 
 const Pins = (props: PropsWithChildren<Props>) => {
 	const { fromStop, toStop, path } = props;
-	console.log(path);
+
 	const markers = useMemo(() => {
 		const stops = new Set<StopPoint>(
 			_.flatten(
