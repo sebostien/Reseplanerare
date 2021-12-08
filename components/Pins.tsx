@@ -44,7 +44,8 @@ const Pins = (props: PropsWithChildren<Props>) => {
 	const markers = useMemo(() => {
 		const stops = new Set<StopPoint>(
 			_.flatten(
-				path.path.map(({ fromStop, toStop }) => [fromStop, toStop]),
+				path?.path?.map(({ fromStop, toStop }) => [fromStop, toStop]) ||
+					[],
 			),
 		);
 
