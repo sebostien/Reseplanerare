@@ -139,11 +139,21 @@ const SearchResultItem = (props: PathProps): JSX.Element => {
 	const first = path[0];
 	const last = path[path.length - 1];
 
-	const lineNumbers = [...new Set(path.map((l) => l.lineNumber))].map(
-		(lineNumber) => {
-			return <LineSymbol key={lineNumber} lineNumber={lineNumber} />;
-		},
-	);
+	const lineNumbersss = [...new Set(path.map((l) => l.lineNumber))];
+	if (hasEvent) lineNumbersss.unshift('EVENT');
+
+	if (lineNumbersss.every((v) => !['CYCLE', 'WALK'].includes(v))) {
+		lineNumbersss.push('WHEELCHAIR');
+	}
+
+	const lineNumbers = lineNumbersss.map((lineNumber) => {
+		return <LineSymbol key={lineNumber} lineNumber={lineNumber} />;
+	});
+
+	const eventStationNames = path
+		.filter((v) => v.toStop.events.length !== 0)
+		.map((v) => v.toStop.stopName)
+		.join(', ');
 
 	return (
 		<li
@@ -189,42 +199,51 @@ const SearchResultItem = (props: PathProps): JSX.Element => {
 					/>
 				</div>
 			</div>
-			{!hasEvent ? (
-				''
-			) : (
-				<div className="p-3">
-					<span
-						className="h-4 pl-6 bg-no-repeat inline-block"
-						style={{
-							backgroundImage:
-								'url(/images/exclamation-triangle-orange-outline.svg)',
-						}}
-					>
-						Denna rutt påverkas av ett evenemang
-					</span>
-				</div>
-			)}
+
 			<AnimateHeight
 				duration={200}
 				height={itemIndex === selectedPath ? 'auto' : 0}
 			>
+				<p className="px-3">
+					{!hasEvent ? (
+						<span
+							className="h-4 pl-6 bg-no-repeat"
+							style={{
+								backgroundImage:
+									'url(/images/exclamation-triangle-orange-outline.svg)',
+							}}
+						>
+							{/* TODO: station name */}
+							Denna resa undviker pågående evenmang
+						</span>
+					) : (
+						<span
+							className="h-4 pl-6 bg-no-repeat"
+							style={{
+								backgroundImage:
+									'url(/images/exclamation-triangle-orange-outline.svg)',
+							}}
+						>
+							{`Denna resa kan drabbas av ökad trängsel och
+							försening på grund av pågående evenemang vid ` + eventStationNames}
+						</span>
+					)}
+				</p>
 				<div className="h-4 text-center">
 					<div className="inline-block w-4/5 border-b-2 border-gray-500">
 						{' '}
 					</div>
 				</div>
-				<div>
-					<div className={'m-3 border-gray-500 overflow-hidden'}>
-						{path.map((stop) => {
-							let change = changeTransportType(
-								prev,
-								stop,
-								last.arriving.hhmm(),
-							);
-							prev = stop;
-							return change;
-						})}
-					</div>
+				<div className={'m-3 border-gray-500 overflow-hidden'}>
+					{path.map((stop) => {
+						let change = changeTransportType(
+							prev,
+							stop,
+							last.arriving.hhmm(),
+						);
+						prev = stop;
+						return change;
+					})}
 				</div>
 			</AnimateHeight>
 		</li>

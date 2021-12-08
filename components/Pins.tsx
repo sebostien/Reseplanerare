@@ -19,6 +19,7 @@ const createMarker = (
 	const svg = (
 		<PinIcon stop={stop.stopName} from={from} to={to} hasEvent={hasEvent} />
 	);
+
 	return (
 		<Marker
 			key={stop.stopName}

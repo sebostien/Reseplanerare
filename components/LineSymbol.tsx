@@ -2,7 +2,7 @@ import { LineStyle, TransportTypes } from '../util/DataTypes';
 import { OUT_STYLES } from '../util/ParseData';
 
 interface Props {
-	lineNumber: string;
+	lineNumber: string | 'EVENT';
 }
 
 const LineSymbol = (props: Props): JSX.Element => {
@@ -32,10 +32,34 @@ const LineSymbol = (props: Props): JSX.Element => {
 		);
 	}
 
+	if (lineNumber === 'EVENT')
+		return (
+			<div
+				className="inline-block w-8 h-8 bg-no-repeat mt-2"
+				style={{
+					backgroundImage:
+						'url(/images/exclamation-triangle-orange-outline.svg)',
+				}}
+			/>
+		);
+
+	if (lineNumber === 'WHEELCHAIR')
+		return (
+			<div
+				className="inline-block w-8 h-8 bg-no-repeat mt-2"
+				style={{
+					backgroundImage: 'url(/images/wheelchair-dark.svg)',
+				}}
+			/>
+		);
+
 	return (
-		<span style={style} className="mr-1 py-1 px-2 rounded-md">
+		<div
+			style={style}
+			className="w-8 h-8 align-top text-center m-1 py-1 rounded-md  inline-block"
+		>
 			{lineNumber}
-		</span>
+		</div>
 	);
 };
 

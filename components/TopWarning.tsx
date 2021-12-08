@@ -12,15 +12,16 @@ const TopWarning = (props: Props): JSX.Element => {
 	if (!props.paths.some((v) => v.hasEvent)) return <></>;
 
 	return (
-		<div className="p-2">
+		<div className="p-2 flex">
 			<span
-				className="block bg-no-repeat pl-10"
+				className="inline-block w-8 h-8 bg-no-repeat"
 				style={{
 					backgroundImage:
 						'url(/images/exclamation-triangle-orange-outline.svg)',
 				}}
-			>
-				Vissa resor påverkas av evenemang
+			></span>
+			<span className="pl-2">
+				Ett eller flera resultat kan påverkas av pågående evenemang
 			</span>
 		</div>
 	);

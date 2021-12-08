@@ -66,6 +66,14 @@ const getBigIcon = (text: string): JSX.Element => {
 	);
 };
 
+const getCycleIcon = (): JSX.Element => {
+	return (
+		<div className="relative -left-3.5 -top-5">
+			<Image width="24" height="24" src="/images/cycle.png" alt="cycle" />
+		</div>
+	);
+};
+
 const getSmallIcon = (): JSX.Element => {
 	const SIZE = 24;
 	return (
@@ -89,6 +97,10 @@ const getIcon = (
 	to: string,
 	hasEvent: boolean,
 ): JSX.Element => {
+	if (stop.includes('Styr & Ställ')) {
+		return getCycleIcon();
+	}
+
 	if (stop === from) {
 		return getBigIcon('A');
 	}
