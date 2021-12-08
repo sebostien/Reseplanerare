@@ -12,8 +12,8 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
 const Main = () => {
 	let [fromStop, setFromStop] = useState('Svingeln');
 	let [toStop, setToStop] = useState('Sankt Sigfrids Plan');
-	let [selectedPath, setSelectedPath] = useState(0);
-	let [startTime, setStartTime] = useState('16:37');
+	let [selectedPath, setSelectedPath] = useState(-1);
+	let [startTime, setStartTime] = useState('16:39');
 	let [paths, setPaths] = useState<LinePathFind[]>([]);
 	let [isMounted, setIsMounted] = useState(false);
 
@@ -82,7 +82,7 @@ const Main = () => {
 			</div>
 			<div className="flex-initial p-2 w-full h-screen">
 				<MapNoSSR
-					path={paths[selectedPath]?.path || []}
+					path={paths[selectedPath] || []}
 					fromStop={fromStop}
 					toStop={toStop}
 				/>

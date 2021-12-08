@@ -20,7 +20,7 @@ const Lines: NextPage<Props> = (props) => {
 
 	const allLines = new Map<string, GeoJSON.Feature[]>();
 
-	if (path.length === 0) return <></>;
+	if (!path || path.length === 0) return <></>;
 
 	const allLayers: ReactElement[] = [];
 	const lineNumbers = new Set(path.map(({ lineNumber }) => lineNumber));

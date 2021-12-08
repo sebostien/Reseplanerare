@@ -18,11 +18,31 @@ const DisplayPath: NextPage<Props> = (props) => {
 
 	if (paths.length == 0 || paths[0].path.length == 0) return <></>;
 
+	let showEvents = false;
+
+	if (props.paths.some((v) => v.hasEvent)) showEvents = true;
+
+	const eventStationNames = [
+		...new Set(
+			paths
+				.map((line) => {
+					return line.path
+						.filter((v) => v.toStop.events.length !== 0)
+						.map((v) => v.toStop.stopName)
+						.join(', ');
+				})
+				.filter((v) => v.length > 0),
+		).values(),
+	].join(', ');
+	console.log(eventStationNames);
+
 	const pathsJSX = paths.map((path, i) => (
 		<SearchResultItem
 			itemIndex={i}
+			showEvents={showEvents}
 			selectedPath={selectedPath}
 			setSelectedPath={setSelectedPath}
+			eventStationNames={eventStationNames}
 			key={
 				path.path[0].departure.hhmm() +
 				path.path[0].lineName +

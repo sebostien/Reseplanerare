@@ -322,13 +322,13 @@
             "type": "CYCLE",
             "fromStop": "Svingeln Styr & Ställ",
             "toStop": "Liseberg Station Styr & Ställ",
-            "minutes": 20
+            "minutes": 9
         },
         {
             "type": "CYCLE",
             "fromStop": "Liseberg Station Styr & Ställ",
             "toStop": "Svingeln Styr & Ställ",
-            "minutes": 20
+            "minutes": 9
         },
         {
             "type": "WALK",
@@ -348,36 +348,8 @@
             "number": "8",
             "name": "Mot Frölunda",
             "startTimes": [
-                "06:18",
-                "06:41",
-                "06:59",
-                "07:27",
                 "07:34",
-                "07:59",
-                "08:25",
-                "10:03",
-                "10:43",
-                "11:03",
-                "11:33",
-                "12:13",
-                "12:43",
-                "13:43",
-                "14:04",
-                "14:43",
-                "15:14",
-                "15:40",
-                "16:08",
-                "16:36",
-                "17:00",
-                "17:20",
-                "17:48",
-                "18:26",
-                "18:59",
-                "19:35",
-                "20:35",
-                "21:35",
-                "22:35",
-                "23:35"
+                "16:44"
             ],
             "stops": [
                 "Svingeln",
@@ -392,8 +364,8 @@
             "number": "5",
             "name": "Mot Östra Sjukhuset",
             "startTimes": [
-                "00:30",
-                "17:18"
+                "08:00",
+                "17:01"
             ],
             "stops": [
                 "Korsvägen",
@@ -405,8 +377,8 @@
             "number": "3",
             "name": "Mot Kålltorp",
             "startTimes": [
-                "00:00",
-                "17:04"
+                "07:40",
+                "16:48"
             ],
             "stops": [
                 "Svingeln",
@@ -423,8 +395,10 @@
             "number": "5",
             "name": "Mot Länsmansgården",
             "startTimes": [
-                "00:30",
-                "17:19"
+                "07:53",
+                "07:54",
+                "16:53",
+                "17:10"
             ],
             "stops": [
                 "Virginsgatan",
@@ -440,11 +414,8 @@
             "number": "6",
             "name": "Spårvagn Mot Frihamnen via Sahlgrenska",
             "startTimes": [
-                "15:19",
-                "16:21",
-                "16:31",
-                "16:41",
-                "17:36"
+                "07:39",
+                "16:41"
             ],
             "stops": [
                 "Svingeln",

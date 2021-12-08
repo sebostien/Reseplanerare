@@ -6,7 +6,12 @@ import TimeDate from '../util/Time';
 import Image from 'next/image';
 import LineSymbol from './LineSymbol';
 
-const changeTransportType = (prev: null | Line, current: Line, key: string) => {
+const changeTransportType = (
+	prev: null | Line,
+	current: Line,
+	key: string,
+	hasEvent: boolean,
+) => {
 	if (prev != null && prev.lineNumber == current.lineNumber) {
 		return (
 			<p
@@ -23,8 +28,7 @@ const changeTransportType = (prev: null | Line, current: Line, key: string) => {
 				</span>
 				<span
 					className={
-						(OUT_STOPS.get(current.toStop.stopName) as StopPoint)
-							.events.length > 0
+						current.toStop.events.length !== 0 && hasEvent
 							? 'text-red-500'
 							: ''
 					}
@@ -62,16 +66,31 @@ const changeTransportType = (prev: null | Line, current: Line, key: string) => {
 				return '';
 			})()}
 			<div className="mb-2">
-				<LineSymbol lineNumber={current.lineNumber} />
-				{/* <span style={styles} className="pt-1 pb-1 pr-2 pl-2 rounded-md">
-					{current.lineNumber}
-				</span> */}
-				{[TransportTypes.WALK, TransportTypes.CYCLE].includes(
-					current.lineName as TransportTypes,
-				) ? (
+				<div className="block">
+					<LineSymbol lineNumber={current.lineNumber} />
+					{[TransportTypes.WALK, TransportTypes.CYCLE].includes(
+						current.lineName as TransportTypes,
+					) ? (
+						''
+					) : (
+						<span className=" inline-block align-bottom pl-2 mt-2">
+							{current.lineName}
+						</span>
+					)}
+				</div>
+				{['CYCLE', 'WALK'].includes(current.lineNumber) ? (
 					''
 				) : (
-					<span className="ml-2">{current.lineName}</span>
+					<div className="block">
+						<LineSymbol lineNumber="WHEELCHAIR" />
+						<span className="inline-block align-middle pb-2 pl-2">
+							{['CYCLE', 'WALK'].includes(current.lineNumber)
+								? ''
+								: `${
+										Math.floor(Math.random() * 2) + 2
+								  } lediga platser`}
+						</span>
+					</div>
 				)}
 			</div>
 			<p>
@@ -86,8 +105,7 @@ const changeTransportType = (prev: null | Line, current: Line, key: string) => {
 				</span>
 				<span
 					className={
-						OUT_STOPS.get(current.toStop.stopName)?.events
-							.length !== 0
+						current.toStop.events.length !== 0 && hasEvent
 							? 'text-red-500'
 							: ''
 					}
@@ -129,10 +147,19 @@ interface PathProps {
 	selectedPath: number;
 	setSelectedPath: React.Dispatch<number>;
 	linePath: LinePathFind;
+	showEvents: boolean;
+	eventStationNames: string;
 }
 
 const SearchResultItem = (props: PathProps): JSX.Element => {
-	const { linePath, selectedPath, setSelectedPath, itemIndex } = props;
+	const {
+		linePath,
+		selectedPath,
+		setSelectedPath,
+		itemIndex,
+		showEvents,
+		eventStationNames,
+	} = props;
 	const { path, hasEvent } = linePath;
 
 	let prev: Line | null = null;
@@ -149,11 +176,6 @@ const SearchResultItem = (props: PathProps): JSX.Element => {
 	const lineNumbers = lineNumbersss.map((lineNumber) => {
 		return <LineSymbol key={lineNumber} lineNumber={lineNumber} />;
 	});
-
-	const eventStationNames = path
-		.filter((v) => v.toStop.events.length !== 0)
-		.map((v) => v.toStop.stopName)
-		.join(', ');
 
 	return (
 		<li
@@ -205,20 +227,21 @@ const SearchResultItem = (props: PathProps): JSX.Element => {
 				height={itemIndex === selectedPath ? 'auto' : 0}
 			>
 				<p className="px-3">
-					{!hasEvent ? (
-						<span
-							className="h-4 pl-6 bg-no-repeat"
-							style={{
-								backgroundImage:
-									'url(/images/exclamation-triangle-orange-outline.svg)',
-							}}
-						>
-							{/* TODO: station name */}
-							Denna resa undviker pågående evenmang
+					{!hasEvent && showEvents ? (
+						<span>
+							<span
+								className="h-4 pl-8 bg-no-repeat bg-contain text-2xl"
+								style={{
+									backgroundImage:
+										'url(/images/crowded-dark.png)',
+								}}
+							></span>
+							{`Denna resa undviker pågående evenmang vid ` +
+								eventStationNames}
 						</span>
-					) : (
+					) : showEvents ? (
 						<span
-							className="h-4 pl-6 bg-no-repeat"
+							className="h-4 pl-8 bg-no-repeat"
 							style={{
 								backgroundImage:
 									'url(/images/exclamation-triangle-orange-outline.svg)',
@@ -227,6 +250,8 @@ const SearchResultItem = (props: PathProps): JSX.Element => {
 							{`Denna resa kan drabbas av ökad trängsel och
 							försening på grund av pågående evenemang vid ` + eventStationNames}
 						</span>
+					) : (
+						''
 					)}
 				</p>
 				<div className="h-4 text-center">
@@ -240,6 +265,7 @@ const SearchResultItem = (props: PathProps): JSX.Element => {
 							prev,
 							stop,
 							last.arriving.hhmm(),
+							hasEvent,
 						);
 						prev = stop;
 						return change;
