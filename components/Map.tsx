@@ -15,9 +15,9 @@ interface Props {
 
 const Map: NextPage<Props> = (props) => {
 	const [viewport, setViewport] = useState({
-		latitude: 57.70465,
-		longitude: 11.988482,
-		zoom: 13.5,
+		latitude: 57.70585,
+		longitude: 11.999982,
+		zoom: 13,
 	});
 
 	const { fromStop, toStop, path } = props;
@@ -29,8 +29,6 @@ const Map: NextPage<Props> = (props) => {
 			width="100%"
 			height="100%"
 			mapStyle="mapbox://styles/mapbox/dark-v9"
-			// mapStyle="mapbox://styles/mapbox/streets-v11"
-			// mapStyle="mapbox://styles/mapbox/navigation-night-v1"
 			mapboxApiAccessToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN}
 			onViewportChange={setViewport}
 		>
