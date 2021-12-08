@@ -82,7 +82,7 @@ const Main = () => {
 			</div>
 			<div className="flex-initial p-2 w-full h-screen">
 				<MapNoSSR
-					path={paths[selectedPath]?.path || []}
+					path={paths[selectedPath] || []}
 					fromStop={fromStop}
 					toStop={toStop}
 				/>

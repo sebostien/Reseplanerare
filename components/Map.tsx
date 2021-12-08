@@ -2,6 +2,7 @@ import { NextPage } from 'next';
 import React, { useState } from 'react';
 import MapGL from 'react-map-gl';
 import { Line } from '../util/DataTypes';
+import { LinePathFind } from '../util/pathFind';
 import Lines from './Lines';
 import Pins from './Pins';
 
@@ -9,7 +10,7 @@ interface Props {
 	className?: string;
 	fromStop: string;
 	toStop: string;
-	path: Line[];
+	path: LinePathFind;
 }
 
 const Map: NextPage<Props> = (props) => {
@@ -34,7 +35,7 @@ const Map: NextPage<Props> = (props) => {
 			onViewportChange={setViewport}
 		>
 			<Pins path={path} fromStop={fromStop} toStop={toStop} />
-			<Lines path={path} />
+			<Lines path={path.path} />
 		</MapGL>
 	);
 };

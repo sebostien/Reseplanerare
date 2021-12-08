@@ -6,7 +6,12 @@ import TimeDate from '../util/Time';
 import Image from 'next/image';
 import LineSymbol from './LineSymbol';
 
-const changeTransportType = (prev: null | Line, current: Line, key: string) => {
+const changeTransportType = (
+	prev: null | Line,
+	current: Line,
+	key: string,
+	hasEvent: boolean,
+) => {
 	if (prev != null && prev.lineNumber == current.lineNumber) {
 		return (
 			<p
@@ -23,8 +28,7 @@ const changeTransportType = (prev: null | Line, current: Line, key: string) => {
 				</span>
 				<span
 					className={
-						(OUT_STOPS.get(current.toStop.stopName) as StopPoint)
-							.events.length > 0
+						current.toStop.events.length !== 0 && hasEvent
 							? 'text-red-500'
 							: ''
 					}
@@ -101,8 +105,7 @@ const changeTransportType = (prev: null | Line, current: Line, key: string) => {
 				</span>
 				<span
 					className={
-						OUT_STOPS.get(current.toStop.stopName)?.events
-							.length !== 0
+						current.toStop.events.length !== 0 && hasEvent
 							? 'text-red-500'
 							: ''
 					}
@@ -262,6 +265,7 @@ const SearchResultItem = (props: PathProps): JSX.Element => {
 							prev,
 							stop,
 							last.arriving.hhmm(),
+							hasEvent,
 						);
 						prev = stop;
 						return change;

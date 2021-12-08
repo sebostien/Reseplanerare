@@ -179,11 +179,36 @@ const pathFind = (from: string, to: string, time: string): LinePathFind[] => {
 	return (
 		paths
 			.map((line) => {
+				console.log(line);
+
 				let hasEvent = line.some((v) => {
 					let a = OUT_STOPS.get(v.fromStop.stopName);
 					let b = OUT_STOPS.get(v.toStop.stopName);
 
-					return a?.events.length !== 0 || b?.events.length !== 0;
+					if (a?.events.length === 0 && a?.events.length === 0)
+						return false;
+
+					for (let e of a?.events || []) {
+						if (
+							TimeDate.timeBetween(e.eventTime, v.arriving)
+								.hours < 1 ||
+							TimeDate.timeBetween(e.eventTime, v.departure)
+								.hours < 1
+						)
+							return true;
+					}
+
+					for (let e of b?.events || []) {
+						if (
+							TimeDate.timeBetween(e.eventTime, v.arriving)
+								.hours < 1 ||
+							TimeDate.timeBetween(e.eventTime, v.departure)
+								.hours < 1
+						)
+							return true;
+					}
+
+					return false;
 				});
 				return {
 					hasEvent,
