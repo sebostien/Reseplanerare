@@ -62,7 +62,7 @@ const changeTransportType = (prev: null | Line, current: Line, key: string) => {
 				return '';
 			})()}
 			<div className="mb-2">
-				<p className="">
+				<div className="block">
 					<LineSymbol lineNumber={current.lineNumber} />
 					{[TransportTypes.WALK, TransportTypes.CYCLE].includes(
 						current.lineName as TransportTypes,
@@ -73,11 +73,11 @@ const changeTransportType = (prev: null | Line, current: Line, key: string) => {
 							{current.lineName}
 						</span>
 					)}
-				</p>
+				</div>
 				{['CYCLE', 'WALK'].includes(current.lineNumber) ? (
 					''
 				) : (
-					<p>
+					<div className="block">
 						<LineSymbol lineNumber="WHEELCHAIR" />
 						<span className="inline-block align-middle pb-2 pl-2">
 							{['CYCLE', 'WALK'].includes(current.lineNumber)
@@ -86,7 +86,7 @@ const changeTransportType = (prev: null | Line, current: Line, key: string) => {
 										Math.floor(Math.random() * 2) + 2
 								  } lediga platser`}
 						</span>
-					</p>
+					</div>
 				)}
 			</div>
 			<p>
