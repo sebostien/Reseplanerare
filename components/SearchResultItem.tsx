@@ -62,16 +62,31 @@ const changeTransportType = (prev: null | Line, current: Line, key: string) => {
 				return '';
 			})()}
 			<div className="mb-2">
-				<LineSymbol lineNumber={current.lineNumber} />
-				{/* <span style={styles} className="pt-1 pb-1 pr-2 pl-2 rounded-md">
-					{current.lineNumber}
-				</span> */}
-				{[TransportTypes.WALK, TransportTypes.CYCLE].includes(
-					current.lineName as TransportTypes,
-				) ? (
+				<p className="">
+					<LineSymbol lineNumber={current.lineNumber} />
+					{[TransportTypes.WALK, TransportTypes.CYCLE].includes(
+						current.lineName as TransportTypes,
+					) ? (
+						''
+					) : (
+						<span className=" inline-block align-bottom pl-2 mt-2">
+							{current.lineName}
+						</span>
+					)}
+				</p>
+				{['CYCLE', 'WALK'].includes(current.lineNumber) ? (
 					''
 				) : (
-					<span className="ml-2">{current.lineName}</span>
+					<p>
+						<LineSymbol lineNumber="WHEELCHAIR" />
+						<span className="inline-block align-middle pb-2 pl-2">
+							{['CYCLE', 'WALK'].includes(current.lineNumber)
+								? ''
+								: `${
+										Math.floor(Math.random() * 2) + 2
+								  } lediga platser`}
+						</span>
+					</p>
 				)}
 			</div>
 			<p>
@@ -206,19 +221,24 @@ const SearchResultItem = (props: PathProps): JSX.Element => {
 			>
 				<p className="px-3">
 					{!hasEvent ? (
-						<span
-							className="h-4 pl-6 bg-no-repeat"
-							style={{
-								backgroundImage:
-									'url(/images/exclamation-triangle-orange-outline.svg)',
-							}}
-						>
+						<p className="pb-2">
+							<span className="relative top-3">
+								<Image
+									width="36"
+									height="36"
+									alt="No traffic"
+									src="/images/crowded-dark.png"
+									className="inline-block"
+								/>
+							</span>
 							{/* TODO: station name */}
-							Denna resa undviker pågående evenmang
-						</span>
+							<span className="pl-2 inline-block">
+								Denna resa undviker pågående evenmang
+							</span>
+						</p>
 					) : (
 						<span
-							className="h-4 pl-6 bg-no-repeat"
+							className="h-4 pl-8 bg-no-repeat"
 							style={{
 								backgroundImage:
 									'url(/images/exclamation-triangle-orange-outline.svg)',

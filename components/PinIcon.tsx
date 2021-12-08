@@ -68,7 +68,7 @@ const getBigIcon = (text: string): JSX.Element => {
 
 const getCycleIcon = (): JSX.Element => {
 	return (
-		<div className="relative -left-3.5 -top-5">
+		<div style={{ transform: `translate(-12px, -21px)` }}>
 			<Image width="24" height="24" src="/images/cycle.png" alt="cycle" />
 		</div>
 	);
