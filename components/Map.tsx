@@ -1,6 +1,6 @@
 import { NextPage } from 'next';
 import React, { useState } from 'react';
-import MapGL from 'react-map-gl';
+import MapGL, { InteractiveMapProps } from 'react-map-gl';
 import { Line } from '../util/DataTypes';
 import { LinePathFind } from '../util/pathFind';
 import Lines from './Lines';
@@ -14,7 +14,7 @@ interface Props {
 }
 
 const Map: NextPage<Props> = (props) => {
-	const [viewport, setViewport] = useState({
+	const [viewport, setViewport] = useState<InteractiveMapProps>({
 		latitude: 57.70585,
 		longitude: 11.999982,
 		zoom: 13,
