@@ -88,7 +88,7 @@ const changeTransportType = (
 								? ''
 								: `${
 										Math.floor(Math.random() * 2) + 2
-								  } lediga platser`}
+								  } platser`}
 						</span>
 					</div>
 				)}
