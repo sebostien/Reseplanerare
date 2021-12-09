@@ -34,7 +34,6 @@ const DisplayPath: NextPage<Props> = (props) => {
 				.filter((v) => v.length > 0),
 		).values(),
 	].join(', ');
-	console.log(eventStationNames);
 
 	const pathsJSX = paths.map((path, i) => (
 		<SearchResultItem

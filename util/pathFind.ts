@@ -179,8 +179,6 @@ const pathFind = (from: string, to: string, time: string): LinePathFind[] => {
 	return (
 		paths
 			.map((line) => {
-				console.log(line);
-
 				let hasEvent = line.some((v) => {
 					let a = OUT_STOPS.get(v.fromStop.stopName);
 					let b = OUT_STOPS.get(v.toStop.stopName);
