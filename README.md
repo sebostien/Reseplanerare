@@ -12,13 +12,6 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## TODO
-
-- [ ] Avoid events in `src/api/pathFind.ts`
-- [ ] Update svg icons in `components/PinIcon.tsx`
-- [ ] Add routes in `data.json`
-- [ ] Add more route types in `util/DataTypes.ts`
-
 ## Resources
 
 <https://docs.mapbox.com/api/maps/styles/>

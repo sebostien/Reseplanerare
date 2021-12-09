@@ -1,6 +1,5 @@
-import { NextPage } from 'next';
 import { Marker } from 'react-map-gl';
-import { Line, StopPoint } from '../util/DataTypes';
+import { StopPoint } from '../util/DataTypes';
 import { OUT_STOPS } from '../util/ParseData';
 import PinIcon from './PinIcon';
 import _ from 'lodash';
@@ -11,12 +10,16 @@ const DefaultIcon = `M20.2,15.7L20.2,15.7c1.1-1.6,1.8-3.6,1.8-5.7c0-5.6-4.5-10-1
 c0,0,0.1,0.1,0.1,0.2c0.2,0.3,0.4,0.6,0.7,0.9c2.6,3.1,7.4,7.6,7.4,7.6s4.8-4.5,7.4-7.5c0.2-0.3,0.5-0.6,0.7-0.9
 C20.1,15.8,20.2,15.8,20.2,15.7z`;
 
-const createMarker = (
-	stop: StopPoint,
-	from: string,
-	to: string,
-	hasEvent: boolean,
-): JSX.Element => {
+interface PopupMarkerProps {
+	stop: StopPoint;
+	from: string;
+	to: string;
+	hasEvent: boolean;
+}
+
+const PopupMarker = (props: PopupMarkerProps): JSX.Element => {
+	const { stop, from, to, hasEvent } = props;
+
 	const svg = (
 		<PinIcon stop={stop.stopName} from={from} to={to} hasEvent={hasEvent} />
 	);
@@ -55,14 +58,15 @@ const Pins = (props: PropsWithChildren<Props>) => {
 		if (OUT_STOPS.has(toStop))
 			stops.add(OUT_STOPS.get(toStop) as StopPoint);
 
-		return [...stops.values()].map((stop: StopPoint) =>
-			createMarker(
-				stop,
-				fromStop,
-				toStop,
-				stop.events.length !== 0 && path.hasEvent,
-			),
-		);
+		return [...stops.values()].map((stop: StopPoint) => (
+			<PopupMarker
+				key={stop.stopName}
+				stop={stop}
+				from={fromStop}
+				to={toStop}
+				hasEvent={stop.events.length !== 0 && path.hasEvent}
+			/>
+		));
 	}, [fromStop, toStop, path]);
 
 	return <> {markers} </>;
