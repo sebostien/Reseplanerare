@@ -1,7 +1,4 @@
-import { useState } from 'react';
 import { OUT_STOPS } from '../util/ParseData';
-import Input from './Input';
-import TimeInput from 'react-input-time';
 
 interface Props {
 	fromStop: string;
@@ -25,11 +22,8 @@ const SearchInput = (props: Props): JSX.Element => {
 		setStartTime,
 	} = props;
 
-	let [minutes, setMinutes] = useState('37');
-	let [hours, setHours] = useState('16');
-
 	return (
-		<>
+		<div className="p-1">
 			<datalist id="dl-stops">
 				{[...OUT_STOPS.keys()].map((stop) => {
 					return (
@@ -41,7 +35,7 @@ const SearchInput = (props: Props): JSX.Element => {
 			</datalist>
 			<input
 				list="dl-stops"
-				className="m-1 p-1 w-full border-2 border-gray-400"
+				className="p-1 w-full border-2 border-gray-400"
 				name="from"
 				value={fromStop}
 				onChange={(e) => {
@@ -56,7 +50,7 @@ const SearchInput = (props: Props): JSX.Element => {
 			/>
 			<input
 				list="dl-stops"
-				className="m-1 p-1 w-full border-2 border-gray-400"
+				className="mt-1 p-1 w-full border-2 border-gray-400"
 				name="to"
 				value={toStop}
 				onChange={(e) => {
@@ -70,7 +64,7 @@ const SearchInput = (props: Props): JSX.Element => {
 				}}
 			/>
 			<input
-				className="m-1 p-1 w-full border-2 border-gray-400"
+				className="mt-1 p-1 w-full border-2 border-gray-400"
 				value={startTime}
 				type="text"
 				name="time"
@@ -80,7 +74,7 @@ const SearchInput = (props: Props): JSX.Element => {
 				}}
 				placeholder="hh:mm"
 			/>
-		</>
+		</div>
 	);
 };
 
