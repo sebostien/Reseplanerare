@@ -74,6 +74,19 @@ const getCycleIcon = (): JSX.Element => {
 	);
 };
 
+const getCalanderIcon = (): JSX.Element => {
+	return (
+		<div style={{ transform: `translate(-12px, -21px)` }}>
+			<Image
+				width="24"
+				height="24"
+				src="/images/Event-icon-a.png"
+				alt="event"
+			/>
+		</div>
+	);
+};
+
 const getSmallIcon = (): JSX.Element => {
 	const SIZE = 24;
 	return (
@@ -110,7 +123,8 @@ const getIcon = (
 	}
 
 	if (hasEvent) {
-		return getEventIcon();
+		return getCalanderIcon();
+		// return getEventIcon();
 	}
 
 	return getSmallIcon();

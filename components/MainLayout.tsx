@@ -6,6 +6,7 @@ import { OUT_STOPS } from '../util/ParseData';
 import pathFind, { LinePathFind } from '../util/pathFind';
 import Svg from './Svg';
 import TopWarning from './TopWarning';
+import SearchInput from './SearchInput';
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -32,46 +33,16 @@ const Main = () => {
 
 	return (
 		<div className="flex min-h-screen">
-			<div className="flex-initial p-1 h-screen overflow-y-scroll overflow-x-hidden">
-				<datalist id="dl-stops">
-					{[...OUT_STOPS.keys()].map((stop) => {
-						return (
-							<option key={stop} value={stop}>
-								{stop}
-							</option>
-						);
-					})}
-				</datalist>
-				<Input
-					stops={OUT_STOPS}
-					value={fromStop}
-					name="from"
-					onChange={(t) => {
-						setSelectedPath(0);
-						setFromStop(t.target.value);
-					}}
-					placeholder="Från..."
-				/>
-				<Input
-					stops={OUT_STOPS}
-					value={toStop}
-					name="to"
-					onChange={(t) => {
-						setSelectedPath(0);
-						setToStop(t.target.value);
-					}}
-					placeholder="Till..."
-				/>
-				<input
-					className="m-1 p-1 w-full border-2 border-gray-400"
-					value={startTime}
-					type="text"
-					name="time"
-					onChange={(t) => {
-						setSelectedPath(0);
-						setStartTime(t.target.value);
-					}}
-					placeholder="Tid..."
+			<div className="flex-initial p-1 h-screen overflow-y-scroll w-4/6 overflow-x-hidden">
+				<SearchInput
+					fromStop={fromStop}
+					setFromStop={setFromStop}
+					toStop={toStop}
+					setToStop={setToStop}
+					selectedPath={selectedPath}
+					setSelectedPath={setSelectedPath}
+					startTime={startTime}
+					setStartTime={setStartTime}
 				/>
 				<TopWarning paths={paths} />
 				<DisplayPath
@@ -80,7 +51,7 @@ const Main = () => {
 					setSelectedPath={setSelectedPath}
 				/>
 			</div>
-			<div className="flex-initial p-2 w-full h-screen">
+			<div className="flex-initial w-full h-screen">
 				<MapNoSSR
 					path={paths[selectedPath] || []}
 					fromStop={fromStop}
