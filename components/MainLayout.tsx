@@ -1,14 +1,9 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
-import MapNoSSR from '../components/NoSSR';
-import DisplayPath from '../components/DisplayPath';
-import Input from '../components/Input';
-import { OUT_STOPS } from '../util/ParseData';
+import React, { useEffect, useMemo, useState } from 'react';
+import DisplayPath from './DisplayPath';
 import pathFind, { LinePathFind } from '../util/pathFind';
-import Svg from './Svg';
 import TopWarning from './TopWarning';
 import SearchInput from './SearchInput';
-
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+import Map from './Map';
 
 const Main = () => {
 	let [fromStop, setFromStop] = useState('Svingeln');
@@ -52,7 +47,7 @@ const Main = () => {
 				/>
 			</div>
 			<div className="md:flex-initial w-full md:h-screen h-96">
-				<MapNoSSR
+				<Map
 					path={paths[selectedPath] || []}
 					fromStop={fromStop}
 					toStop={toStop}
