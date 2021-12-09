@@ -32,8 +32,8 @@ const Main = () => {
 	}, []);
 
 	return (
-		<div className="flex min-h-screen">
-			<div className="flex-initial p-1 h-screen overflow-y-scroll w-4/6 overflow-x-hidden">
+		<div className="md:flex min-h-screen overflow-hidden">
+			<div className="md:flex-initial p-1 pr-2 md:h-screen md:overflow-y-scroll md:w-4/6 md:overflow-x-hidden">
 				<SearchInput
 					fromStop={fromStop}
 					setFromStop={setFromStop}
@@ -51,7 +51,7 @@ const Main = () => {
 					setSelectedPath={setSelectedPath}
 				/>
 			</div>
-			<div className="flex-initial w-full h-screen">
+			<div className="md:flex-initial w-full md:h-screen h-96">
 				<MapNoSSR
 					path={paths[selectedPath] || []}
 					fromStop={fromStop}

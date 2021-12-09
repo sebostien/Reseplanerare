@@ -12,15 +12,17 @@ const TopWarning = (props: Props): JSX.Element => {
 	if (!props.paths.some((v) => v.hasEvent)) return <></>;
 
 	return (
-		<span
-			className="ml-2 pl-8 bg-no-repeat"
-			style={{
-				backgroundImage:
-					'url(/images/exclamation-triangle-orange-outline.svg)',
-			}}
-		>
-			Ett eller flera resultat kan påverkas av pågående evenemang
-		</span>
+		<div className="p-2">
+			<span
+				className="h-4 pl-8 bg-no-repeat"
+				style={{
+					backgroundImage:
+						'url(/images/exclamation-triangle-orange-outline.svg)',
+				}}
+			>
+				Ett eller flera resultat kan påverkas av pågående evenemang
+			</span>
+		</div>
 	);
 };
 

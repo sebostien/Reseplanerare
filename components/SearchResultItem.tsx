@@ -228,14 +228,13 @@ const SearchResultItem = (props: PathProps): JSX.Element => {
 			>
 				<p className="px-3">
 					{!hasEvent && showEvents ? (
-						<span>
-							<span
-								className="h-4 pl-8 bg-no-repeat bg-contain text-2xl"
-								style={{
-									backgroundImage:
-										'url(/images/crowded-dark.png)',
-								}}
-							></span>
+						<span
+							className="h-4 pl-8 bg-no-repeat"
+							style={{
+								backgroundImage:
+									'url(/images/crowded-dark.svg)',
+							}}
+						>
 							{`Denna resa undviker pågående evenmang vid ` +
 								eventStationNames}
 						</span>
